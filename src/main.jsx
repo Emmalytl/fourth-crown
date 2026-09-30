@@ -28,8 +28,9 @@ const initialCategories = [
 // Real food photography references. Replace with restaurant-owned/licensed
 // photography before commercial launch.
 const initialMenu = [
-  { id: "jollof", category: "rice", name: "Ghanaian Jollof Rice", description: "Smoky Ghana-style jollof served with grilled chicken, fried plantain and fresh sides.", ingredients: ["Tomato", "Red pepper", "Onion", "Ginger", "Garlic", "Thyme", "Jasmine rice", "Chicken"], price: 16, available: true, badge: "Signature", image: "https://i.etsystatic.com/65604732/r/il/e10a26/8049315113/il_794xN.8049315113_3aeb.jpg" },
-  { id: "acheke", category: "rice", name: "Gari Fortor", description: "Ghanaian gari mixed with rich tomato stew, served with fried plantain and fresh garnish.", ingredients: ["Gari", "Tomato", "Onion", "Pepper", "Plantain", "Egg", "Goat meat", "Seasoning"], price: 19, available: true, badge: "Ghanaian favourite", image: "https://i.pinimg.com/originals/e5/88/5a/e5885ab2ababedf4ea86adca20e31b56.jpg" },
+  { id: "jollof", category: "rice", name: "Ghanaian Jollof Rice", description: "Smoky Ghana-style jollof served with grilled chicken, fried plantain and fresh sides.", ingredients: ["Tomato", "Red pepper", "Onion", "Ginger", "Garlic", "Jasmine rice", "Chicken"], price: 16, available: true, badge: "Signature", image: "https://i.etsystatic.com/65604732/r/il/e10a26/8049315113/il_794xN.8049315113_3aeb.jpg" },
+  { id: "acheke", category: "rice", name: "Acheke", description: "West African cassava couscous served with grilled fish, fried plantain and fresh tomato-onion relish.", ingredients: ["Acheke", "Grilled fish", "Plantain", "Tomato", "Onion", "Pepper"], price: 19, available: true, badge: "Featured", image: "/images/acheke.jpg" },
+  { id: "gari-fortor", category: "rice", name: "Gari Fortor", description: "Ghanaian gari mixed with rich tomato stew, served with fried plantain and a hearty protein.", ingredients: ["Gari", "Tomato", "Onion", "Pepper", "Plantain", "Egg", "Goat meat", "Seasoning"], price: 19, available: true, badge: "Ghanaian favourite", image: "https://i.pinimg.com/originals/e5/88/5a/e5885ab2ababedf4ea86adca20e31b56.jpg" },
   { id: "braised", category: "rice", name: "Braised Rice & Chicken", description: "Seasoned braised rice paired with tender, juicy chicken and a fresh side.", ingredients: ["Rice", "Onion", "Garlic", "Ginger", "Stock", "Mixed vegetables", "Chicken", "Spices"], price: 17, available: true, badge: "", image: "https://images.bolt.eu/store/2024/2024-09-10/706f884f-1e55-4580-aedc-430196572216.jpeg" },
   { id: "plain", category: "rice", name: "Plain Rice & Stew", description: "Steamed white rice with a rich tomato-based Ghanaian stew and tender protein.", ingredients: ["White rice", "Tomato", "Onion", "Pepper", "Garlic", "Ginger", "Chicken", "Seasoning"], price: 15, available: true, badge: "Classic", image: "https://cdn.menu-res.com/suncityjointrestauranttema/32336-albums-9.jpg" },
   { id: "kelewele", category: "sides", name: "Kelewele", description: "Spiced fried plantain seasoned with ginger, pepper and warm Ghanaian spices.", ingredients: ["Ripe plantain", "Ginger", "Pepper", "Garlic", "Salt", "Oil"], price: 9, available: true, badge: "Classic", image: "https://images.squarespace-cdn.com/content/v1/65cfd1369377d32bcd0051fa/34764d34-bba3-4c87-bbaf-57438fee7616/362886327_658675622814247_3440017675938964884_n%281%29.jpg" },
@@ -38,13 +39,15 @@ const initialMenu = [
 
 function loadMenu() {
   const stored = load("fcc_menu", initialMenu);
-  // Migrate every built-in demo item so an older browser cache cannot keep broken image URLs.
+  // Migrate built-in items and append any newly introduced built-ins to an older local cache.
   const canonical = Object.fromEntries(initialMenu.map(item => [item.id, item]));
-  return stored.map(item => {
+  const migrated = stored.map(item => {
     const base = canonical[item.id];
     if (!base) return item;
     return { ...base, ...item, image: base.image, ingredients: base.ingredients, name: base.name, description: base.description, badge: base.badge };
   });
+  const existingIds = new Set(migrated.map(item => item.id));
+  return [...migrated, ...initialMenu.filter(item => !existingIds.has(item.id))];
 }
 
 const initialSettings = {
@@ -165,7 +168,7 @@ function Header({ cartCount, onNavigate }) {
   return <>
     <header className="site-header fc-modern-header">
       <button className="brand fc-brand" onClick={() => onNavigate("home")} aria-label="FOURTH CROWN home">
-        <img className="brand-logo" src="/images/logo-original.png" alt="FOURTH CROWN" />
+        <img className="brand-logo" src="/images/fourth-crown-logo-transparent.png" alt="FOURTH CROWN" />
       </button>
       <nav className="fc-nav">
         <button onClick={() => onNavigate("home")}>Home</button>
@@ -183,15 +186,15 @@ function Header({ cartCount, onNavigate }) {
 }
 
 function Home({ onBrowse, settings, onAdd }) {
-  const featured = [initialMenu[0], initialMenu[1], initialMenu[4]];
-  const best = [initialMenu[0], initialMenu[1], initialMenu[2]];
+  const featured = [initialMenu[0], initialMenu[1], initialMenu[5]];
+  const best = [initialMenu[0], initialMenu[1], initialMenu[3]];
   const [serviceSlide, setServiceSlide] = useState(0);
   const serviceStories = [
     {
       title: "Served with care",
       label: "FROM OUR KITCHEN",
       text: "Our team prepares each order with the same care you would expect from a meal made for family — packed fresh and ready to enjoy.",
-      image: "https://images.pexels.com/photos/5812876/pexels-photo-5812876.jpeg?cs=srgb&dl=pexels-khoa-vo-2347168-5812876.jpg&fm=jpg"
+      image: "https://images.pexels.com/photos/3796810/pexels-photo-3796810.jpeg?auto=compress&cs=tinysrgb&w=1600"
     },
     {
       title: "Pickup, ready when you are",
@@ -226,7 +229,6 @@ function Home({ onBrowse, settings, onAdd }) {
         <div className="fc-food-main"><img src={featured[0].image} alt="Ghanaian jollof rice with chicken and plantain"/><span>GHANAIAN<br/>JOLLOF</span></div>
         <div className="fc-food-small fc-food-small-one"><img src={featured[1].image} alt="Gari Fortor with fried plantain"/></div>
         <div className="fc-food-small fc-food-small-two"><img src={featured[2].image} alt="Kelewele"/></div>
-        <div className="fc-logo-card"><img src="/images/logo-original.png" alt="FOURTH CROWN"/></div>
         <div className="fc-art-note"><b>Made with Ghanaian soul.</b><span>Prepared fresh. Packed with care.</span></div>
       </div>
     </section>
@@ -284,7 +286,7 @@ function Home({ onBrowse, settings, onAdd }) {
 
     <section className="fc-menu-highlight">
       <div className="fc-menu-highlight-head"><div><span className="fc-label">FROM OUR KITCHEN</span><h2>Ghana on your table.</h2></div><button className="fc-primary" onClick={onBrowse}>Explore the menu <ArrowRight size={16}/></button></div>
-      <div className="fc-menu-mini-grid">{initialMenu.slice(3,6).map(item => <button key={item.id} className="mini-food" onClick={onBrowse}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.name}</span><b>{money(item.price)}</b></button>)}</div>
+      <div className="fc-menu-mini-grid">{[initialMenu[1], initialMenu[4], initialMenu[5]].map(item => <button key={item.id} className="mini-food" onClick={onBrowse}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.name}</span><b>{money(item.price)}</b></button>)}</div>
     </section>
 
     <section className="fc-testimonials">
@@ -293,7 +295,7 @@ function Home({ onBrowse, settings, onAdd }) {
     </section>
 
     <section className="fc-story">
-      <div className="fc-story-image"><img src={initialMenu[1].image} alt="Ghanaian food prepared for delivery"/><span>ROOTED IN<br/>GHANA.</span></div>
+      <div className="fc-story-image"><img src={initialMenu[1].image} alt="Acheke with grilled fish and plantain"/><span>ROOTED IN<br/>GHANA.</span></div>
       <div className="fc-story-copy"><span className="fc-label">THE FOURTH CROWN STORY</span><h2>Heritage in every<br/><em>plate.</em></h2><p>FOURTH CROWN brings Ghanaian comfort food into a modern pickup and delivery experience. The goal is simple: food that feels familiar, looks beautiful and arrives ready to enjoy.</p><div className="fc-story-points"><span><b>01</b>Authentic Ghanaian flavours</span><span><b>02</b>Freshly prepared for every order</span><span><b>03</b>Pickup and delivery across our service area</span></div><button className="fc-primary" onClick={onBrowse}>Order from FOURTH CROWN <ArrowRight size={16}/></button></div>
     </section>
 
@@ -301,7 +303,7 @@ function Home({ onBrowse, settings, onAdd }) {
 
     <section className="fc-delivery"><div><span className="fc-label">PICKUP OR DELIVERY</span><h2>Your next Ghanaian meal is closer.</h2></div><p>Choose pickup when you are nearby or delivery when you want FOURTH CROWN brought to your door. Final delivery availability and fees are managed by the restaurant.</p><button className="fc-primary" onClick={onBrowse}>Start your order <ArrowRight size={16}/></button></section>
 
-    <footer className="fc-footer"><div><img src="/images/logo-original.png" alt="FOURTH CROWN"/><p>{settings.tagline}</p><a className="fc-footer-phone" href="tel:8504656422">850 465 6422</a></div><div className="fc-footer-links"><button onClick={onBrowse}>Menu</button></div><small>© {new Date().getFullYear()} FOURTH CROWN</small></footer>
+    <footer className="fc-footer"><div><img src="/images/fourth-crown-logo-transparent.png" alt="FOURTH CROWN"/><p>{settings.tagline}</p><a className="fc-footer-phone" href="tel:8504656422">850 465 6422</a></div><div className="fc-footer-links"><button onClick={onBrowse}>Menu</button></div><small>© {new Date().getFullYear()} FOURTH CROWN</small></footer>
     <button className="fc-top-float" aria-label="Back to top" onClick={() => window.scrollTo({top:0,behavior:"smooth"})}><ChevronUp size={18}/><span>Top</span></button>
   </main>;
 }
@@ -353,3 +355,10 @@ function Stat({label,value}){return <div className="stat"><small>{label}</small>
 function Empty({title,action}){return <div className="empty"><ShoppingBag size={30}/><h2>{title}</h2><button className="btn btn-dark" onClick={action}>Browse menu</button></div>}
 
 createRoot(document.getElementById("root")).render(<App/>);
+
+// Enable install-to-home-screen support on HTTPS deployments.
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  });
+}

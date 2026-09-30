@@ -1,11 +1,11 @@
 {
   "project": "FOURTH CROWN",
   "project_id": "FCC-001",
-  "build": "08",
-  "status": "frontend prototype \u2014 customer-facing visual revision",
+  "build": "11",
+  "status": "frontend prototype — logo/PWA/menu visual revision",
   "reference": "https://dribbble.com/shots/25754327-Restaurant-Website-Design-UI",
-  "logo": "public/images/fourth-crown-logo.png",
-  "logo_background_removed": false,
+  "logo": "public/images/fourth-crown-logo-transparent.png",
+  "logo_background_removed": true,
   "features": [
     "responsive editorial restaurant homepage",
     "FOURTH CROWN logo with built-in warm background and steam wordmark",
@@ -21,7 +21,11 @@
     "item details and add-ons",
     "cart and quantity controls",
     "pickup/delivery checkout prototype",
-    "order history"
+    "order history",
+    "transparent user-supplied FOURTH CROWN wordmark used consistently in navigation and footer",
+    "favicon and install-to-home-screen PWA manifest using the FOURTH CROWN logo",
+    "user-supplied Acheke photo added to the menu and homepage food displays",
+    "brighter full-color Black/African-American service image for the serving-customer slide"
   ],
   "production_gaps": [
     "secure backend authentication",
@@ -33,10 +37,11 @@
     "licensed restaurant-owned food photography"
   ],
   "notes": [
-    "Customer-facing Admin entry removed from the landing page; administration remains outside the customer navigation.",
-    "Added 850 465 6422 contact number and catering-for-all-events messaging.",
-    "Removed Fresh herbs from the ingredient list.",
-    "Replaced yellow-heavy treatment with a clearer brand palette.",
-    "Added local service artwork so the caterer/pickup/delivery carousel cannot appear blank because of remote image-host failures."
+    "Removed the landing-page logo card so the hero no longer shows a rectangular logo frame.",
+    "The uploaded FOURTH CROWN logo has its off-white background removed and is stored as a transparent PNG.",
+    "Navigation and footer use the same transparent logo asset.",
+    "Added fourth-crown title, favicon, web manifest, Apple touch icon and service worker for install-to-home-screen support.",
+    "Added the uploaded Acheke photo as a built-in menu item and featured homepage food image.",
+    "The first service slide now uses a brighter full-color Black/African-American server/customer photo from Pexels."
   ]
 }

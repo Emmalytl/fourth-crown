@@ -208,3 +208,20 @@
 .fc-logo-card img{width:185px!important;max-width:42vw!important;height:auto!important;background:transparent!important;}
 @media(max-width:700px){.brand-logo{width:150px!important;max-width:48vw!important;max-height:50px!important}.fc-logo-card img{width:145px!important;max-width:48vw!important}}
 @media(max-width:380px){.brand-logo{width:136px!important}.fc-logo-card img{width:132px!important}}
+
+/* FCC-001 Build 11 — final logo, PWA and service-image polish */
+.site-header{height:86px}
+.fc-brand{min-width:0!important}
+.brand-logo{width:150px!important;max-width:34vw!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center!important;background:transparent!important}
+.fc-footer{background:#fffdf8!important;color:var(--ink)!important;border-top:1px solid #e2dacd!important}
+.fc-footer img{width:150px!important;height:auto!important;filter:none!important}
+.fc-footer p{color:#777269!important}
+.fc-footer-links button{color:var(--ink)!important}
+.fc-service-slide img{filter:brightness(1.10) saturate(1.16) contrast(1.03)}
+.fc-service-slide:after{background:linear-gradient(180deg,rgba(20,20,17,.02) 15%,rgba(20,20,17,.58) 100%)!important}
+@media(max-width:700px){
+  .site-header{height:74px}
+  .brand-logo{width:122px!important;max-width:42vw!important}
+  .fc-footer img{width:138px!important}
+}
+@media(max-width:380px){.brand-logo{width:112px!important}}
