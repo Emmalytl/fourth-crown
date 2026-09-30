@@ -1,4 +1,4 @@
-const CACHE = "fourth-crown-v12";
+const CACHE = "fourth-crown-v11";
 const APP_SHELL = ["/", "/index.html", "/manifest.webmanifest", "/images/icon-192.png", "/images/icon-512.png"];
 
 self.addEventListener("install", event => {

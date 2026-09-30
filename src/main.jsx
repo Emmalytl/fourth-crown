@@ -28,14 +28,30 @@ const initialCategories = [
 ];
 
 const foodImages = {
-  jollof: "https://images.pexels.com/photos/18805640/pexels-photo-18805640.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  waakye: "https://images.pexels.com/photos/32612769/pexels-photo-32612769.jpeg?cs=srgb&dl=pexels-jkreat0r-32612769.jpg&fm=jpg",
-  plantain: "https://images.pexels.com/photos/35136066/pexels-photo-35136066.jpeg?cs=srgb&dl=pexels-ghanawithophelia-35136066.jpg&fm=jpg",
-  fish: "https://images.pexels.com/photos/36378588/pexels-photo-36378588.jpeg?cs=srgb&dl=pexels-masuma-rahaman-437541976-36378588.jpg&fm=jpg",
-  stew: "https://images.pexels.com/photos/37648017/pexels-photo-37648017.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  fufu: "https://images.pexels.com/photos/12924181/pexels-photo-12924181.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  acheke: "/images/acheke.jpg",
-  smallChops: "https://images.pexels.com/photos/30412120/pexels-photo-30412120.jpeg?auto=compress&cs=tinysrgb&w=1200"
+  // Real Ghanaian food photographs researched from Wikimedia Commons.
+  // The filenames below point to the exact dish photos rather than generic stock images.
+  jollof: "https://upload.wikimedia.org/wikipedia/commons/1/16/Ghanian_food.jpg",
+  waakye: "https://upload.wikimedia.org/wikipedia/commons/7/7e/LOCAL_FOOD_CALLED_WAAKYE_IN_GHANA.jpg",
+  gariFotor: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Gari_Fotor.jpg",
+  braised: "https://upload.wikimedia.org/wikipedia/commons/a/a3/Home_made_Braised_rice_with_egg.jpg",
+  plain: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Plain_rice_with_stew.jpg",
+  kelewele: "https://upload.wikimedia.org/wikipedia/commons/5/52/Kelewele_%28Ghana_Food%29.jpg",
+  smallChops: "https://upload.wikimedia.org/wikipedia/commons/e/e9/A_box_of_small_chops.jpg",
+  fufu: "https://upload.wikimedia.org/wikipedia/commons/d/da/Fufu_and_%27light_soup.jpg",
+  fufuGroundnut: "https://upload.wikimedia.org/wikipedia/commons/1/18/Fufuo_and_peanut_butter_soup.jpg",
+  fufuPalmnut: "https://upload.wikimedia.org/wikipedia/commons/2/26/Fufu_with_palmnut_soup_and_chicken.jpg",
+  ampesi: "https://upload.wikimedia.org/wikipedia/commons/5/58/Ampesi.jpg",
+  redRed: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Beans%2C_gari%2C_red_oil_and_ripe_plantain.jpg",
+  bankuTilapia: "https://upload.wikimedia.org/wikipedia/commons/8/86/Banku_and_Grilled_Tilapia.jpg",
+  kenkeyFish: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Ghana_Kenkey.jpg",
+  grilledTilapia: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Grilled_Tilapia_Ghana.JPG",
+  friedYam: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Fried_yam_with_shito.jpg",
+  yamEgg: "https://upload.wikimedia.org/wikipedia/commons/7/73/Boiled_yam_with_egg_stew.jpg",
+  okroBanku: "https://upload.wikimedia.org/wikipedia/commons/0/06/Banku_with_Okro_Soup.jpg",
+  kokonte: "https://upload.wikimedia.org/wikipedia/commons/9/94/Konkonte_and_groundnut_soup.jpg",
+  tzo: "https://upload.wikimedia.org/wikipedia/commons/5/57/Tuo_zaafi.jpg",
+  friedRice: "https://upload.wikimedia.org/wikipedia/commons/a/af/Ghanaian_fried_rice.jpg",
+  acheke: "/images/acheke.jpg"
 };
 
 const defaultAddons = [
@@ -47,33 +63,30 @@ const defaultAddons = [
 const initialMenu = [
   { id: "jollof", category: "rice", name: "Ghanaian Jollof Rice", description: "Smoky Ghana-style jollof with grilled chicken, fried plantain and fresh tomato-onion relish.", ingredients: ["Tomato", "Red pepper", "Onion", "Ginger", "Garlic", "Jasmine rice", "Chicken"], price: 16, available: true, badge: "Signature", image: foodImages.jollof, addons: defaultAddons },
   { id: "acheke", category: "rice", name: "Acheke", description: "Cassava couscous served with grilled fish, fried plantain and fresh tomato-onion relish.", ingredients: ["Acheke", "Grilled fish", "Plantain", "Tomato", "Onion", "Pepper"], price: 19, available: true, badge: "Featured", image: foodImages.acheke, addons: [{id:"fish",name:"Extra grilled fish",price:6},{id:"plantain",name:"Extra fried plantain",price:3},{id:"shito",name:"Kpakpo shito",price:1.5}] },
-  { id: "gari-fortor", category: "traditional", name: "Gari Fortor", description: "Ghanaian gari cooked into a rich tomato stew with egg, plantain and a hearty protein.", ingredients: ["Gari", "Tomato", "Onion", "Pepper", "Plantain", "Egg", "Goat meat"], price: 19, available: true, badge: "Ghanaian favourite", image: "https://i.pinimg.com/originals/e5/88/5a/e5885ab2ababedf4ea86adca20e31b56.jpg", addons: defaultAddons },
-  { id: "braised", category: "rice", name: "Braised Rice & Chicken", description: "Seasoned braised rice paired with tender chicken and a fresh side.", ingredients: ["Rice", "Onion", "Garlic", "Ginger", "Stock", "Chicken", "Spices"], price: 17, available: true, badge: "Classic", image: foodImages.jollof, addons: defaultAddons },
-  { id: "plain", category: "rice", name: "Plain Rice & Stew", description: "Steamed white rice with rich Ghanaian tomato stew and tender protein.", ingredients: ["White rice", "Tomato", "Onion", "Pepper", "Garlic", "Ginger", "Chicken"], price: 15, available: true, badge: "Classic", image: foodImages.stew, addons: defaultAddons },
-  { id: "kelewele", category: "sides", name: "Kelewele", description: "Spiced fried plantain seasoned with ginger, pepper and warm Ghanaian spices.", ingredients: ["Ripe plantain", "Ginger", "Pepper", "Garlic", "Salt"], price: 9, available: true, badge: "Classic", image: foodImages.plantain, addons: [{id:"peanuts",name:"Roasted peanuts",price:1.5},{id:"shito",name:"Kpakpo shito",price:1.5}] },
+  { id: "gari-fortor", category: "traditional", name: "Gari Fortor", description: "Ghanaian gari cooked into a rich tomato stew with egg, plantain and a hearty protein.", ingredients: ["Gari", "Tomato", "Onion", "Pepper", "Plantain", "Egg", "Goat meat"], price: 19, available: true, badge: "Ghanaian favourite", image: foodImages.gariFotor, addons: defaultAddons },
+  { id: "braised", category: "rice", name: "Braised Rice & Chicken", description: "Seasoned braised rice paired with tender chicken and a fresh side.", ingredients: ["Rice", "Onion", "Garlic", "Ginger", "Stock", "Chicken", "Spices"], price: 17, available: true, badge: "Classic", image: foodImages.braised, addons: defaultAddons },
+  { id: "plain", category: "rice", name: "Plain Rice & Stew", description: "Steamed white rice with rich Ghanaian tomato stew and tender protein.", ingredients: ["White rice", "Tomato", "Onion", "Pepper", "Garlic", "Ginger", "Chicken"], price: 15, available: true, badge: "Classic", image: foodImages.plain, addons: defaultAddons },
+  { id: "kelewele", category: "sides", name: "Kelewele", description: "Spiced fried plantain seasoned with ginger, pepper and warm Ghanaian spices.", ingredients: ["Ripe plantain", "Ginger", "Pepper", "Garlic", "Salt"], price: 9, available: true, badge: "Classic", image: foodImages.kelewele, addons: [{id:"peanuts",name:"Roasted peanuts",price:1.5},{id:"shito",name:"Kpakpo shito",price:1.5}] },
   { id: "smallchops", category: "sides", name: "Ghanaian Small Chops", description: "A shareable selection of crispy bites made for gatherings and celebrations.", ingredients: ["Chicken", "Beef", "Flour", "Onion", "Pepper", "Ginger"], price: 14, available: true, badge: "Shareable", image: foodImages.smallChops, addons: [{id:"large",name:"Make it a large box",price:7},{id:"shito",name:"Kpakpo shito",price:1.5}] },
   { id: "fufu-light", category: "swallows", name: "Fufu & Light Soup", description: "Soft Ghanaian fufu served with a bright, peppery light soup and tender protein.", ingredients: ["Fufu", "Tomato", "Pepper", "Onion", "Chicken", "Spices"], price: 20, available: true, badge: "Traditional", image: foodImages.fufu, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6},{id:"pepper",name:"Extra pepper",price:1}] },
-  { id: "fufu-groundnut", category: "swallows", name: "Fufu & Groundnut Soup", description: "Fufu with creamy groundnut soup, rich spices and your choice of protein.", ingredients: ["Fufu", "Groundnut", "Tomato", "Pepper", "Chicken", "Spices"], price: 21, available: true, badge: "Comfort food", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
-  { id: "fufu-palmnut", category: "swallows", name: "Fufu & Palm Nut Soup", description: "Traditional fufu paired with rich palm nut soup and a hearty protein.", ingredients: ["Fufu", "Palm nut", "Tomato", "Pepper", "Meat", "Spices"], price: 21, available: true, badge: "Traditional", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
-  { id: "ampesi", category: "traditional", name: "Ampesi & Kontomire", description: "Boiled yam and ripe plantain served with rich kontomire stew and egg.", ingredients: ["Yam", "Plantain", "Kontomire", "Egg", "Onion", "Pepper"], price: 18, available: true, badge: "Ghanaian classic", image: foodImages.stew, addons: [{id:"egg",name:"Extra egg",price:2},{id:"fish",name:"Smoked fish",price:5}] },
+  { id: "fufu-groundnut", category: "swallows", name: "Fufu & Groundnut Soup", description: "Fufu with creamy groundnut soup, rich spices and your choice of protein.", ingredients: ["Fufu", "Groundnut", "Tomato", "Pepper", "Chicken", "Spices"], price: 21, available: true, badge: "Comfort food", image: foodImages.fufuGroundnut, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "fufu-palmnut", category: "swallows", name: "Fufu & Palm Nut Soup", description: "Traditional fufu paired with rich palm nut soup and a hearty protein.", ingredients: ["Fufu", "Palm nut", "Tomato", "Pepper", "Meat", "Spices"], price: 21, available: true, badge: "Traditional", image: foodImages.fufuPalmnut, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "ampesi", category: "traditional", name: "Ampesi & Kontomire", description: "Boiled yam and ripe plantain served with rich kontomire stew and egg.", ingredients: ["Yam", "Plantain", "Kontomire", "Egg", "Onion", "Pepper"], price: 18, available: true, badge: "Ghanaian classic", image: foodImages.ampesi, addons: [{id:"egg",name:"Extra egg",price:2},{id:"fish",name:"Smoked fish",price:5}] },
   { id: "waakye", category: "traditional", name: "Waakye", description: "Ghanaian rice and beans served with stew, plantain, egg and your choice of protein.", ingredients: ["Rice", "Beans", "Stew", "Plantain", "Egg", "Shito"], price: 18, available: true, badge: "Popular", image: foodImages.waakye, addons: [{id:"egg",name:"Extra egg",price:2},{id:"plantain",name:"Extra plantain",price:3},{id:"beef",name:"Extra beef",price:5}] },
-  { id: "red-red", category: "traditional", name: "Red Red & Plantain", description: "Slow-cooked bean stew with ripe fried plantain and a comforting Ghanaian finish.", ingredients: ["Beans", "Plantain", "Tomato", "Onion", "Palm oil", "Pepper"], price: 16, available: true, badge: "Plant-based", image: foodImages.plantain, addons: [{id:"egg",name:"Add egg",price:2},{id:"fish",name:"Add fish",price:5}] },
-  { id: "banku-tilapia", category: "grills", name: "Banku & Grilled Tilapia", description: "Soft banku with grilled tilapia, pepper sauce and fresh tomato-onion relish.", ingredients: ["Banku", "Tilapia", "Pepper", "Tomato", "Onion", "Lime"], price: 23, available: true, badge: "Signature", image: foodImages.fish, addons: [{id:"fish",name:"Extra tilapia",price:9},{id:"shito",name:"Kpakpo shito",price:1.5}] },
-  { id: "kenkey-fish", category: "grills", name: "Kenkey & Fried Fish", description: "Traditional fermented corn kenkey with fried fish, hot pepper and fresh tomato relish.", ingredients: ["Kenkey", "Fried fish", "Tomato", "Onion", "Pepper"], price: 20, available: true, badge: "Traditional", image: foodImages.fish, addons: [{id:"fish",name:"Extra fish",price:6},{id:"pepper",name:"Extra pepper",price:1}] },
-  { id: "grilled-tilapia", category: "grills", name: "Whole Grilled Tilapia", description: "Seasoned whole tilapia grilled until smoky, served with plantain and pepper relish.", ingredients: ["Tilapia", "Plantain", "Pepper", "Tomato", "Onion"], price: 24, available: true, badge: "From the grill", image: foodImages.fish, addons: [{id:"plantain",name:"Extra plantain",price:3},{id:"fish",name:"Extra fish portion",price:9}] },
-  { id: "fried-yam", category: "sides", name: "Fried Yam & Shito", description: "Crisp fried yam served with house shito and a fresh pepper-tomato dip.", ingredients: ["Yam", "Shito", "Pepper", "Tomato"], price: 10, available: true, badge: "Snack", image: foodImages.plantain, addons: [{id:"chicken",name:"Add grilled chicken",price:5}] },
-  { id: "yam-egg", category: "traditional", name: "Boiled Yam & Egg Stew", description: "Tender boiled yam with rich Ghanaian egg stew and fresh pepper.", ingredients: ["Yam", "Egg", "Tomato", "Onion", "Pepper"], price: 16, available: true, badge: "Homestyle", image: foodImages.stew, addons: [{id:"egg",name:"Extra egg",price:2},{id:"plantain",name:"Extra plantain",price:3}] },
-  { id: "okro-banku", category: "swallows", name: "Banku & Okro Stew", description: "Soft banku with rich okro stew and a choice of fish or meat.", ingredients: ["Banku", "Okro", "Tomato", "Pepper", "Fish", "Meat"], price: 21, available: true, badge: "Ghanaian favourite", image: foodImages.stew, addons: [{id:"fish",name:"Extra fish",price:6},{id:"goat",name:"Goat meat",price:5}] },
-  { id: "kokonte", category: "swallows", name: "Kokonte & Groundnut Soup", description: "Traditional kokonte paired with rich groundnut soup and tender protein.", ingredients: ["Kokonte", "Groundnut", "Tomato", "Pepper", "Meat", "Spices"], price: 21, available: true, badge: "Heritage plate", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
-  { id: "tzo", category: "swallows", name: "Tuo Zaafi & Ayoyo Soup", description: "Northern Ghana-inspired tuo zaafi served with ayoyo soup and a hearty protein.", ingredients: ["Tuo Zaafi", "Ayoyo", "Tomato", "Pepper", "Meat"], price: 21, available: true, badge: "Northern Ghana", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
-  { id: "fried-rice", category: "rice", name: "Ghanaian Fried Rice", description: "Ghana-style fried rice with omelette, salad and spicy house sauce.", ingredients: ["Rice", "Egg", "Vegetables", "Chicken", "Pepper"], price: 17, available: true, badge: "Favourite", image: "https://images.pexels.com/photos/32612771/pexels-photo-32612771.jpeg?cs=srgb&dl=pexels-jkreat0r-32612771.jpg&fm=jpg", addons: defaultAddons }
+  { id: "red-red", category: "traditional", name: "Red Red & Plantain", description: "Slow-cooked bean stew with ripe fried plantain and a comforting Ghanaian finish.", ingredients: ["Beans", "Plantain", "Tomato", "Onion", "Palm oil", "Pepper"], price: 16, available: true, badge: "Plant-based", image: foodImages.redRed, addons: [{id:"egg",name:"Add egg",price:2},{id:"fish",name:"Add fish",price:5}] },
+  { id: "banku-tilapia", category: "grills", name: "Banku & Grilled Tilapia", description: "Soft banku with grilled tilapia, pepper sauce and fresh tomato-onion relish.", ingredients: ["Banku", "Tilapia", "Pepper", "Tomato", "Onion", "Lime"], price: 23, available: true, badge: "Signature", image: foodImages.bankuTilapia, addons: [{id:"fish",name:"Extra tilapia",price:9},{id:"shito",name:"Kpakpo shito",price:1.5}] },
+  { id: "kenkey-fish", category: "grills", name: "Kenkey & Fried Fish", description: "Traditional fermented corn kenkey with fried fish, hot pepper and fresh tomato relish.", ingredients: ["Kenkey", "Fried fish", "Tomato", "Onion", "Pepper"], price: 20, available: true, badge: "Traditional", image: foodImages.kenkeyFish, addons: [{id:"fish",name:"Extra fish",price:6},{id:"pepper",name:"Extra pepper",price:1}] },
+  { id: "grilled-tilapia", category: "grills", name: "Whole Grilled Tilapia", description: "Seasoned whole tilapia grilled until smoky, served with plantain and pepper relish.", ingredients: ["Tilapia", "Plantain", "Pepper", "Tomato", "Onion"], price: 24, available: true, badge: "From the grill", image: foodImages.grilledTilapia, addons: [{id:"plantain",name:"Extra plantain",price:3},{id:"fish",name:"Extra fish portion",price:9}] },
+  { id: "fried-yam", category: "sides", name: "Fried Yam & Shito", description: "Crisp fried yam served with house shito and a fresh pepper-tomato dip.", ingredients: ["Yam", "Shito", "Pepper", "Tomato"], price: 10, available: true, badge: "Snack", image: foodImages.friedYam, addons: [{id:"chicken",name:"Add grilled chicken",price:5}] },
+  { id: "yam-egg", category: "traditional", name: "Boiled Yam & Egg Stew", description: "Tender boiled yam with rich Ghanaian egg stew and fresh pepper.", ingredients: ["Yam", "Egg", "Tomato", "Onion", "Pepper"], price: 16, available: true, badge: "Homestyle", image: foodImages.yamEgg, addons: [{id:"egg",name:"Extra egg",price:2},{id:"plantain",name:"Extra plantain",price:3}] },
+  { id: "okro-banku", category: "swallows", name: "Banku & Okro Stew", description: "Soft banku with rich okro stew and a choice of fish or meat.", ingredients: ["Banku", "Okro", "Tomato", "Pepper", "Fish", "Meat"], price: 21, available: true, badge: "Ghanaian favourite", image: foodImages.okroBanku, addons: [{id:"fish",name:"Extra fish",price:6},{id:"goat",name:"Goat meat",price:5}] },
+  { id: "kokonte", category: "swallows", name: "Kokonte & Groundnut Soup", description: "Traditional kokonte paired with rich groundnut soup and tender protein.", ingredients: ["Kokonte", "Groundnut", "Tomato", "Pepper", "Meat", "Spices"], price: 21, available: true, badge: "Heritage plate", image: foodImages.kokonte, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "tzo", category: "swallows", name: "Tuo Zaafi & Ayoyo Soup", description: "Northern Ghana-inspired tuo zaafi served with ayoyo soup and a hearty protein.", ingredients: ["Tuo Zaafi", "Ayoyo", "Tomato", "Pepper", "Meat"], price: 21, available: true, badge: "Northern Ghana", image: foodImages.tzo, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "fried-rice", category: "rice", name: "Ghanaian Fried Rice", description: "Ghana-style fried rice with omelette, salad and spicy house sauce.", ingredients: ["Rice", "Egg", "Vegetables", "Chicken", "Pepper"], price: 17, available: true, badge: "Favourite", image: foodImages.friedRice, addons: defaultAddons }
 ];
 
 function loadMenu() {
-  const storedValue = load("fcc_menu", initialMenu);
-  // A previous build can leave invalid or non-array localStorage data behind.
-  // Always recover to the built-in menu instead of allowing the whole React app to crash.
-  const stored = Array.isArray(storedValue) ? storedValue : initialMenu;
+  const stored = load("fcc_menu", initialMenu);
   // Migrate built-in items and append any newly introduced built-ins to an older local cache.
   const canonical = Object.fromEntries(initialMenu.map(item => [item.id, item]));
   const migrated = stored.map(item => {
@@ -114,9 +127,9 @@ function load(key, fallback) {
 function App() {
   const [view, setView] = useState("home");
   const [menu, setMenu] = useState(loadMenu);
-  const [categories, setCategories] = useState(() => { const value = load("fcc_categories", initialCategories); return Array.isArray(value) && value.length ? value : initialCategories; });
+  const [categories, setCategories] = useState(() => load("fcc_categories", initialCategories));
   const [settings, setSettings] = useState(() => load("fcc_settings", initialSettings));
-  const [orders, setOrders] = useState(() => { const value = load("fcc_orders", demoOrders); return Array.isArray(value) ? value : demoOrders; });
+  const [orders, setOrders] = useState(() => load("fcc_orders", demoOrders));
   const [cart, setCart] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -365,7 +378,7 @@ function Home({ onBrowse, settings, onAdd }) {
 
     <section className="fc-delivery"><div><span className="fc-label">PICKUP OR DELIVERY</span><h2>Your next Ghanaian meal is closer.</h2></div><p>Choose pickup when you are nearby or delivery when you want FOURTH CROWN brought to your door. Final delivery availability and fees are managed by the restaurant.</p><button className="fc-primary" onClick={onBrowse}>Start your order <ArrowRight size={16}/></button></section>
 
-    <footer className="fc-footer"><div><img src="/images/fourth-crown-logo-transparent.png" alt="FOURTH CROWN"/><p>{settings.tagline}</p><a className="fc-footer-phone" href="tel:8504656422">850 465 6422</a></div><div className="fc-footer-links"><button onClick={onBrowse}>Menu</button></div><small>© {new Date().getFullYear()} FOURTH CROWN</small></footer>
+    <footer className="fc-footer"><div><img src="/images/fourth-crown-logo-transparent.png" alt="FOURTH CROWN"/><p>{settings.tagline}</p><a className="fc-footer-phone" href="tel:8504656422">850 465 6422</a></div><div className="fc-footer-links"><button onClick={onBrowse}>Menu</button></div><details className="photo-credits"><summary>Food photo credits</summary><p>Food photography used in the menu is sourced from Wikimedia Commons dish photographs. Individual licenses and photographer credits are listed in the project README.</p></details><small>© {new Date().getFullYear()} FOURTH CROWN</small></footer>
     <button className="fc-top-float" aria-label="Back to top" onClick={() => window.scrollTo({top:0,behavior:"smooth"})}><ChevronUp size={18}/><span>Top</span></button>
   </main>;
 }
@@ -374,7 +387,7 @@ function DishCard({ item, index, onAdd }) {
   const [open, setOpen] = useState(false);
   return <article className="fc-dish-card">
     <div className="fc-dish-image"><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.badge || "FOURTH CROWN"}</span><button aria-label={`Quick add ${item.name}`} onClick={() => onAdd(item)}><Plus size={18}/></button></div>
-    <div className="fc-dish-info"><span>0{index+1}</span><div><h3>{item.name}</h3><p>{item.description}</p><div className="dish-ingredients">{(item.ingredients || []).slice(0,5).map(x=><small key={x}>{x}</small>)}</div><strong>{money(item.price)}</strong><button className="card-customize" onClick={() => setOpen(true)}>Customize & add <ArrowRight size={13}/></button></div></div>
+    <div className="fc-dish-info"><span>0{index+1}</span><div><h3>{item.name}</h3><p>{item.description}</p><div className="dish-ingredients">{(item.ingredients || []).slice(0,5).map(x=><small key={x}>{x}</small>)}</div><div className="dish-purchase"><div><small>Starting price</small><strong>{money(item.price)}</strong></div><button className="card-customize" onClick={() => setOpen(true)}>Customize & add <ArrowRight size={13}/></button></div></div></div>
     {open && <ItemModal item={item} onClose={() => setOpen(false)} onAdd={(food, addon) => { onAdd(food, addon); setOpen(false); }} />}
   </article>;
 }
@@ -382,7 +395,7 @@ function DishCard({ item, index, onAdd }) {
 function MenuView({ menu, categories, selectedCategory, setSelectedCategory, onSelect, onAdd }) {
   const [search, setSearch] = useState("");
   const filtered = (selectedCategory === "popular" ? menu : menu.filter(x => x.category === selectedCategory)).filter(x => `${x.name} ${x.description}`.toLowerCase().includes(search.toLowerCase()));
-  return <main className="content menu-page"><div className="page-heading"><div><span className="eyebrow">FOURTH CROWN MENU</span><h1>Choose your plate.</h1><p className="menu-helper"><CircleHelp size={14}/> Tap <b>Customize & add</b> if you want extras. Use <b>Quick add</b> for the regular plate.</p></div><div className="search-box"><Search size={16}/><input placeholder="Search jollof, fufu, ampesi..." value={search} onChange={e=>setSearch(e.target.value)}/></div></div><div className="category-tabs">{categories.map(c => <button key={c.id} className={selectedCategory===c.id?"active":""} onClick={() => setSelectedCategory(c.id)}>{c.name}</button>)}</div><div className="menu-grid">{filtered.map(item => <article className="menu-card" key={item.id}><button className="food-placeholder" onClick={() => onSelect(item)}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/>{item.badge && <b>{item.badge}</b>}</button><div className="menu-card-body"><div><h3>{item.name}</h3><strong>{money(item.price)}</strong></div><p>{item.description}</p><div className="card-actions"><span className={item.available?"available":"sold"}>{item.available?"Available":"Sold out"}</span><div className="menu-card-buttons"><button className="small-add secondary" disabled={!item.available} onClick={() => onSelect(item)}>Customize</button><button className="small-add" disabled={!item.available} onClick={() => onAdd(item)}><Plus size={14}/> Quick add</button></div></div></div></article>)}</div></main>;
+  return <main className="content menu-page"><div className="page-heading"><div><span className="eyebrow">FOURTH CROWN MENU</span><h1>Choose your plate.</h1><p className="menu-helper"><CircleHelp size={14}/> Tap <b>Customize & add</b> if you want extras. Use <b>Quick add</b> for the regular plate.</p></div><div className="search-box"><Search size={16}/><input placeholder="Search jollof, fufu, ampesi..." value={search} onChange={e=>setSearch(e.target.value)}/></div></div><div className="category-tabs">{categories.map(c => <button key={c.id} className={selectedCategory===c.id?"active":""} onClick={() => setSelectedCategory(c.id)}>{c.name}</button>)}</div><div className="menu-grid">{filtered.map(item => <article className="menu-card" key={item.id}><button className="food-placeholder" onClick={() => onSelect(item)}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/>{item.badge && <b>{item.badge}</b>}</button><div className="menu-card-body"><div className="menu-card-title"><h3>{item.name}</h3></div><div className="menu-price-row"><span>Starting price</span><strong>{money(item.price)}</strong></div><p>{item.description}</p><div className="card-actions"><span className={item.available?"available":"sold"}>{item.available?"Available":"Sold out"}</span><div className="menu-card-buttons"><button className="small-add secondary" disabled={!item.available} onClick={() => onSelect(item)}>Customize & add</button><button className="small-add" disabled={!item.available} onClick={() => onAdd(item)}><Plus size={14}/> Quick add</button></div></div></div></article>)}</div></main>;
 }
 
 function ItemModal({ item, onClose, onAdd }) {
@@ -472,6 +485,6 @@ createRoot(document.getElementById("root")).render(<App/>);
 // Enable install-to-home-screen support on HTTPS deployments.
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register(`/sw.js?v=12`).catch(() => {});
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
   });
 }
