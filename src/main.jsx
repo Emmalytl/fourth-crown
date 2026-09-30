@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import {
   ArrowRight, Check, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp,
   Clock3, Crown, MapPin, Minus, PackageCheck, Plus, Search, ShoppingBag,
-  Truck, Utensils, X
+  Truck, Utensils, X, CreditCard, ShieldCheck, Settings2, WalletCards, Pencil, Save, Eye, EyeOff, Trash2, CircleHelp
 } from "lucide-react";
 import "./styles.css";
 
@@ -20,21 +20,53 @@ import "./styles.css";
 
 const initialCategories = [
   { id: "popular", name: "Popular" },
-  { id: "rice", name: "Rice & Mains" },
-  { id: "sides", name: "Sides" },
-  { id: "small-chops", name: "Small Chops" }
+  { id: "rice", name: "Rice & Grains" },
+  { id: "swallows", name: "Swallows & Soups" },
+  { id: "traditional", name: "Traditional Plates" },
+  { id: "grills", name: "Grills & Fish" },
+  { id: "sides", name: "Sides & Snacks" }
 ];
 
-// Real food photography references. Replace with restaurant-owned/licensed
-// photography before commercial launch.
+const foodImages = {
+  jollof: "https://images.pexels.com/photos/18805640/pexels-photo-18805640.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  waakye: "https://images.pexels.com/photos/32612769/pexels-photo-32612769.jpeg?cs=srgb&dl=pexels-jkreat0r-32612769.jpg&fm=jpg",
+  plantain: "https://images.pexels.com/photos/35136066/pexels-photo-35136066.jpeg?cs=srgb&dl=pexels-ghanawithophelia-35136066.jpg&fm=jpg",
+  fish: "https://images.pexels.com/photos/36378588/pexels-photo-36378588.jpeg?cs=srgb&dl=pexels-masuma-rahaman-437541976-36378588.jpg&fm=jpg",
+  stew: "https://images.pexels.com/photos/37648017/pexels-photo-37648017.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  fufu: "https://images.pexels.com/photos/12924181/pexels-photo-12924181.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  acheke: "/images/acheke.jpg",
+  smallChops: "https://images.pexels.com/photos/30412120/pexels-photo-30412120.jpeg?auto=compress&cs=tinysrgb&w=1200"
+};
+
+const defaultAddons = [
+  { id: "plantain", name: "Extra fried plantain", price: 3 },
+  { id: "protein", name: "Extra grilled chicken", price: 5 },
+  { id: "shito", name: "Kpakpo shito", price: 1.5 }
+];
+
 const initialMenu = [
-  { id: "jollof", category: "rice", name: "Ghanaian Jollof Rice", description: "Smoky Ghana-style jollof served with grilled chicken, fried plantain and fresh sides.", ingredients: ["Tomato", "Red pepper", "Onion", "Ginger", "Garlic", "Jasmine rice", "Chicken"], price: 16, available: true, badge: "Signature", image: "https://i.etsystatic.com/65604732/r/il/e10a26/8049315113/il_794xN.8049315113_3aeb.jpg" },
-  { id: "acheke", category: "rice", name: "Acheke", description: "West African cassava couscous served with grilled fish, fried plantain and fresh tomato-onion relish.", ingredients: ["Acheke", "Grilled fish", "Plantain", "Tomato", "Onion", "Pepper"], price: 19, available: true, badge: "Featured", image: "/images/acheke.jpg" },
-  { id: "gari-fortor", category: "rice", name: "Gari Fortor", description: "Ghanaian gari mixed with rich tomato stew, served with fried plantain and a hearty protein.", ingredients: ["Gari", "Tomato", "Onion", "Pepper", "Plantain", "Egg", "Goat meat", "Seasoning"], price: 19, available: true, badge: "Ghanaian favourite", image: "https://i.pinimg.com/originals/e5/88/5a/e5885ab2ababedf4ea86adca20e31b56.jpg" },
-  { id: "braised", category: "rice", name: "Braised Rice & Chicken", description: "Seasoned braised rice paired with tender, juicy chicken and a fresh side.", ingredients: ["Rice", "Onion", "Garlic", "Ginger", "Stock", "Mixed vegetables", "Chicken", "Spices"], price: 17, available: true, badge: "", image: "https://images.bolt.eu/store/2024/2024-09-10/706f884f-1e55-4580-aedc-430196572216.jpeg" },
-  { id: "plain", category: "rice", name: "Plain Rice & Stew", description: "Steamed white rice with a rich tomato-based Ghanaian stew and tender protein.", ingredients: ["White rice", "Tomato", "Onion", "Pepper", "Garlic", "Ginger", "Chicken", "Seasoning"], price: 15, available: true, badge: "Classic", image: "https://cdn.menu-res.com/suncityjointrestauranttema/32336-albums-9.jpg" },
-  { id: "kelewele", category: "sides", name: "Kelewele", description: "Spiced fried plantain seasoned with ginger, pepper and warm Ghanaian spices.", ingredients: ["Ripe plantain", "Ginger", "Pepper", "Garlic", "Salt", "Oil"], price: 9, available: true, badge: "Classic", image: "https://images.squarespace-cdn.com/content/v1/65cfd1369377d32bcd0051fa/34764d34-bba3-4c87-bbaf-57438fee7616/362886327_658675622814247_3440017675938964884_n%281%29.jpg" },
-  { id: "smallchops", category: "small-chops", name: "Ghanaian Small Chops", description: "A shareable selection of crispy bites made for gatherings and celebrations.", ingredients: ["Chicken", "Beef", "Flour", "Onion", "Pepper", "Ginger", "Garlic", "Seasoning"], price: 14, available: true, badge: "Shareable", image: "https://i.pinimg.com/736x/02/b3/29/02b3294c1a631b62f6ab3a4b46e3501a.jpg" }
+  { id: "jollof", category: "rice", name: "Ghanaian Jollof Rice", description: "Smoky Ghana-style jollof with grilled chicken, fried plantain and fresh tomato-onion relish.", ingredients: ["Tomato", "Red pepper", "Onion", "Ginger", "Garlic", "Jasmine rice", "Chicken"], price: 16, available: true, badge: "Signature", image: foodImages.jollof, addons: defaultAddons },
+  { id: "acheke", category: "rice", name: "Acheke", description: "Cassava couscous served with grilled fish, fried plantain and fresh tomato-onion relish.", ingredients: ["Acheke", "Grilled fish", "Plantain", "Tomato", "Onion", "Pepper"], price: 19, available: true, badge: "Featured", image: foodImages.acheke, addons: [{id:"fish",name:"Extra grilled fish",price:6},{id:"plantain",name:"Extra fried plantain",price:3},{id:"shito",name:"Kpakpo shito",price:1.5}] },
+  { id: "gari-fortor", category: "traditional", name: "Gari Fortor", description: "Ghanaian gari cooked into a rich tomato stew with egg, plantain and a hearty protein.", ingredients: ["Gari", "Tomato", "Onion", "Pepper", "Plantain", "Egg", "Goat meat"], price: 19, available: true, badge: "Ghanaian favourite", image: "https://i.pinimg.com/originals/e5/88/5a/e5885ab2ababedf4ea86adca20e31b56.jpg", addons: defaultAddons },
+  { id: "braised", category: "rice", name: "Braised Rice & Chicken", description: "Seasoned braised rice paired with tender chicken and a fresh side.", ingredients: ["Rice", "Onion", "Garlic", "Ginger", "Stock", "Chicken", "Spices"], price: 17, available: true, badge: "Classic", image: foodImages.jollof, addons: defaultAddons },
+  { id: "plain", category: "rice", name: "Plain Rice & Stew", description: "Steamed white rice with rich Ghanaian tomato stew and tender protein.", ingredients: ["White rice", "Tomato", "Onion", "Pepper", "Garlic", "Ginger", "Chicken"], price: 15, available: true, badge: "Classic", image: foodImages.stew, addons: defaultAddons },
+  { id: "kelewele", category: "sides", name: "Kelewele", description: "Spiced fried plantain seasoned with ginger, pepper and warm Ghanaian spices.", ingredients: ["Ripe plantain", "Ginger", "Pepper", "Garlic", "Salt"], price: 9, available: true, badge: "Classic", image: foodImages.plantain, addons: [{id:"peanuts",name:"Roasted peanuts",price:1.5},{id:"shito",name:"Kpakpo shito",price:1.5}] },
+  { id: "smallchops", category: "sides", name: "Ghanaian Small Chops", description: "A shareable selection of crispy bites made for gatherings and celebrations.", ingredients: ["Chicken", "Beef", "Flour", "Onion", "Pepper", "Ginger"], price: 14, available: true, badge: "Shareable", image: foodImages.smallChops, addons: [{id:"large",name:"Make it a large box",price:7},{id:"shito",name:"Kpakpo shito",price:1.5}] },
+  { id: "fufu-light", category: "swallows", name: "Fufu & Light Soup", description: "Soft Ghanaian fufu served with a bright, peppery light soup and tender protein.", ingredients: ["Fufu", "Tomato", "Pepper", "Onion", "Chicken", "Spices"], price: 20, available: true, badge: "Traditional", image: foodImages.fufu, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6},{id:"pepper",name:"Extra pepper",price:1}] },
+  { id: "fufu-groundnut", category: "swallows", name: "Fufu & Groundnut Soup", description: "Fufu with creamy groundnut soup, rich spices and your choice of protein.", ingredients: ["Fufu", "Groundnut", "Tomato", "Pepper", "Chicken", "Spices"], price: 21, available: true, badge: "Comfort food", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "fufu-palmnut", category: "swallows", name: "Fufu & Palm Nut Soup", description: "Traditional fufu paired with rich palm nut soup and a hearty protein.", ingredients: ["Fufu", "Palm nut", "Tomato", "Pepper", "Meat", "Spices"], price: 21, available: true, badge: "Traditional", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "ampesi", category: "traditional", name: "Ampesi & Kontomire", description: "Boiled yam and ripe plantain served with rich kontomire stew and egg.", ingredients: ["Yam", "Plantain", "Kontomire", "Egg", "Onion", "Pepper"], price: 18, available: true, badge: "Ghanaian classic", image: foodImages.stew, addons: [{id:"egg",name:"Extra egg",price:2},{id:"fish",name:"Smoked fish",price:5}] },
+  { id: "waakye", category: "traditional", name: "Waakye", description: "Ghanaian rice and beans served with stew, plantain, egg and your choice of protein.", ingredients: ["Rice", "Beans", "Stew", "Plantain", "Egg", "Shito"], price: 18, available: true, badge: "Popular", image: foodImages.waakye, addons: [{id:"egg",name:"Extra egg",price:2},{id:"plantain",name:"Extra plantain",price:3},{id:"beef",name:"Extra beef",price:5}] },
+  { id: "red-red", category: "traditional", name: "Red Red & Plantain", description: "Slow-cooked bean stew with ripe fried plantain and a comforting Ghanaian finish.", ingredients: ["Beans", "Plantain", "Tomato", "Onion", "Palm oil", "Pepper"], price: 16, available: true, badge: "Plant-based", image: foodImages.plantain, addons: [{id:"egg",name:"Add egg",price:2},{id:"fish",name:"Add fish",price:5}] },
+  { id: "banku-tilapia", category: "grills", name: "Banku & Grilled Tilapia", description: "Soft banku with grilled tilapia, pepper sauce and fresh tomato-onion relish.", ingredients: ["Banku", "Tilapia", "Pepper", "Tomato", "Onion", "Lime"], price: 23, available: true, badge: "Signature", image: foodImages.fish, addons: [{id:"fish",name:"Extra tilapia",price:9},{id:"shito",name:"Kpakpo shito",price:1.5}] },
+  { id: "kenkey-fish", category: "grills", name: "Kenkey & Fried Fish", description: "Traditional fermented corn kenkey with fried fish, hot pepper and fresh tomato relish.", ingredients: ["Kenkey", "Fried fish", "Tomato", "Onion", "Pepper"], price: 20, available: true, badge: "Traditional", image: foodImages.fish, addons: [{id:"fish",name:"Extra fish",price:6},{id:"pepper",name:"Extra pepper",price:1}] },
+  { id: "grilled-tilapia", category: "grills", name: "Whole Grilled Tilapia", description: "Seasoned whole tilapia grilled until smoky, served with plantain and pepper relish.", ingredients: ["Tilapia", "Plantain", "Pepper", "Tomato", "Onion"], price: 24, available: true, badge: "From the grill", image: foodImages.fish, addons: [{id:"plantain",name:"Extra plantain",price:3},{id:"fish",name:"Extra fish portion",price:9}] },
+  { id: "fried-yam", category: "sides", name: "Fried Yam & Shito", description: "Crisp fried yam served with house shito and a fresh pepper-tomato dip.", ingredients: ["Yam", "Shito", "Pepper", "Tomato"], price: 10, available: true, badge: "Snack", image: foodImages.plantain, addons: [{id:"chicken",name:"Add grilled chicken",price:5}] },
+  { id: "yam-egg", category: "traditional", name: "Boiled Yam & Egg Stew", description: "Tender boiled yam with rich Ghanaian egg stew and fresh pepper.", ingredients: ["Yam", "Egg", "Tomato", "Onion", "Pepper"], price: 16, available: true, badge: "Homestyle", image: foodImages.stew, addons: [{id:"egg",name:"Extra egg",price:2},{id:"plantain",name:"Extra plantain",price:3}] },
+  { id: "okro-banku", category: "swallows", name: "Banku & Okro Stew", description: "Soft banku with rich okro stew and a choice of fish or meat.", ingredients: ["Banku", "Okro", "Tomato", "Pepper", "Fish", "Meat"], price: 21, available: true, badge: "Ghanaian favourite", image: foodImages.stew, addons: [{id:"fish",name:"Extra fish",price:6},{id:"goat",name:"Goat meat",price:5}] },
+  { id: "kokonte", category: "swallows", name: "Kokonte & Groundnut Soup", description: "Traditional kokonte paired with rich groundnut soup and tender protein.", ingredients: ["Kokonte", "Groundnut", "Tomato", "Pepper", "Meat", "Spices"], price: 21, available: true, badge: "Heritage plate", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "tzo", category: "swallows", name: "Tuo Zaafi & Ayoyo Soup", description: "Northern Ghana-inspired tuo zaafi served with ayoyo soup and a hearty protein.", ingredients: ["Tuo Zaafi", "Ayoyo", "Tomato", "Pepper", "Meat"], price: 21, available: true, badge: "Northern Ghana", image: foodImages.stew, addons: [{id:"goat",name:"Goat meat",price:5},{id:"fish",name:"Extra fish",price:6}] },
+  { id: "fried-rice", category: "rice", name: "Ghanaian Fried Rice", description: "Ghana-style fried rice with omelette, salad and spicy house sauce.", ingredients: ["Rice", "Egg", "Vegetables", "Chicken", "Pepper"], price: 17, available: true, badge: "Favourite", image: "https://images.pexels.com/photos/32612771/pexels-photo-32612771.jpeg?cs=srgb&dl=pexels-jkreat0r-32612771.jpg&fm=jpg", addons: defaultAddons }
 ];
 
 function loadMenu() {
@@ -44,7 +76,7 @@ function loadMenu() {
   const migrated = stored.map(item => {
     const base = canonical[item.id];
     if (!base) return item;
-    return { ...base, ...item, image: base.image, ingredients: base.ingredients, name: base.name, description: base.description, badge: base.badge };
+    return { ...base, ...item, image: base.image, ingredients: base.ingredients, addons: item.addons || base.addons, name: base.name, description: base.description, badge: base.badge };
   });
   const existingIds = new Set(migrated.map(item => item.id));
   return [...migrated, ...initialMenu.filter(item => !existingIds.has(item.id))];
@@ -86,6 +118,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [selectedItem, setSelectedItem] = useState(null);
   const [toast, setToast] = useState(null);
+  const [adminAuthed, setAdminAuthed] = useState(() => sessionStorage.getItem("fcc_admin") === "1");
 
   useEffect(() => {
     if (!toast) return undefined;
@@ -144,9 +177,32 @@ function App() {
     setView("orders");
   }
 
+  function createPaidOrder(pending, payment) {
+    const order = {
+      id: `FCC-${Date.now().toString().slice(-8)}`,
+      createdAt: new Date().toISOString(),
+      customer: pending.customer,
+      items: pending.items,
+      subtotal: pending.subtotal,
+      deliveryFee: pending.deliveryFee,
+      tax: pending.tax,
+      total: pending.total,
+      status: "Received",
+      paymentStatus: "Paid",
+      paymentSessionId: payment.id
+    };
+    setOrders(current => [order, ...current]);
+    sessionStorage.removeItem("fcc_pending_order");
+    setCart([]);
+    setView("orders");
+  }
+
   function updateOrderStatus(id, status) {
     setOrders(current => current.map(order => order.id === id ? { ...order, status } : order));
   }
+
+  if (window.location.pathname === "/payment-success") return <PaymentSuccessView onPaid={createPaidOrder} />;
+  if (window.location.pathname === "/admin") return <AdminView authed={adminAuthed} setAuthed={setAdminAuthed} menu={menu} setMenu={setMenu} categories={categories} setCategories={setCategories} settings={settings} setSettings={setSettings} orders={orders} updateOrderStatus={updateOrderStatus} logout={() => {sessionStorage.removeItem("fcc_admin");setAdminAuthed(false);}} />;
 
   return (
     <div className="app-shell">
@@ -186,9 +242,11 @@ function Header({ cartCount, onNavigate }) {
 }
 
 function Home({ onBrowse, settings, onAdd }) {
-  const featured = [initialMenu[0], initialMenu[1], initialMenu[5]];
-  const best = [initialMenu[0], initialMenu[1], initialMenu[3]];
+  const featured = [initialMenu[0], initialMenu[1], initialMenu[8]];
+  const best = [initialMenu[0], initialMenu[12], initialMenu[13]];
   const [serviceSlide, setServiceSlide] = useState(0);
+  const [foodSlide, setFoodSlide] = useState(0);
+  const foodCarousel = initialMenu.slice(0, 8);
   const serviceStories = [
     {
       title: "Served with care",
@@ -212,7 +270,8 @@ function Home({ onBrowse, settings, onAdd }) {
 
   useEffect(() => {
     const timer = window.setInterval(() => setServiceSlide(current => (current + 1) % serviceStories.length), 4200);
-    return () => window.clearInterval(timer);
+    const foodTimer = window.setInterval(() => setFoodSlide(current => (current + 1) % foodCarousel.length), 3200);
+    return () => { window.clearInterval(timer); window.clearInterval(foodTimer); };
   }, [serviceStories.length]);
 
   return <main className="fc-home">
@@ -242,11 +301,11 @@ function Home({ onBrowse, settings, onAdd }) {
       </div>
       <div className="fc-craving-side">
         <div className="fc-carousel" aria-label="FOURTH CROWN food carousel">
-          {initialMenu.map((item, index) => <div className={`fc-slide ${index===0?"active":""}`} key={item.id}>
+          {foodCarousel.map((item, index) => <div className={`fc-slide ${index===foodSlide?"active":""}`} key={item.id}>
             <img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/>
             <div className="fc-slide-overlay"><span>0{index+1}</span><div><b>{item.name}</b><small>{(item.ingredients || []).slice(0,5).join(" · ")}</small></div></div>
           </div>)}
-          <div className="fc-carousel-dots">{initialMenu.map((item,index)=><i key={item.id} className={index===0?"active":""}></i>)}</div>
+          <div className="fc-carousel-dots">{foodCarousel.map((item,index)=><i key={item.id} className={index===foodSlide?"active":""}></i>)}</div>
         </div>
       </div>
     </section>
@@ -286,7 +345,7 @@ function Home({ onBrowse, settings, onAdd }) {
 
     <section className="fc-menu-highlight">
       <div className="fc-menu-highlight-head"><div><span className="fc-label">FROM OUR KITCHEN</span><h2>Ghana on your table.</h2></div><button className="fc-primary" onClick={onBrowse}>Explore the menu <ArrowRight size={16}/></button></div>
-      <div className="fc-menu-mini-grid">{[initialMenu[1], initialMenu[4], initialMenu[5]].map(item => <button key={item.id} className="mini-food" onClick={onBrowse}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.name}</span><b>{money(item.price)}</b></button>)}</div>
+      <div className="fc-menu-mini-grid">{[initialMenu[1], initialMenu[11], initialMenu[12]].map(item => <button key={item.id} className="mini-food" onClick={onBrowse}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.name}</span><b>{money(item.price)}</b></button>)}</div>
     </section>
 
     <section className="fc-testimonials">
@@ -309,18 +368,26 @@ function Home({ onBrowse, settings, onAdd }) {
 }
 
 function DishCard({ item, index, onAdd }) {
-  return <article className="fc-dish-card"><div className="fc-dish-image"><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.badge || "FOURTH CROWN"}</span><button aria-label={`Add ${item.name}`} onClick={() => onAdd(item)}><Plus size={18}/></button></div><div className="fc-dish-info"><span>0{index+1}</span><div><h3>{item.name}</h3><p>{item.description}</p><div className="dish-ingredients">{(item.ingredients || []).slice(0,5).map(x=><small key={x}>{x}</small>)}</div><strong>{money(item.price)}</strong></div></div></article>;
+  const [open, setOpen] = useState(false);
+  return <article className="fc-dish-card">
+    <div className="fc-dish-image"><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/><span>{item.badge || "FOURTH CROWN"}</span><button aria-label={`Quick add ${item.name}`} onClick={() => onAdd(item)}><Plus size={18}/></button></div>
+    <div className="fc-dish-info"><span>0{index+1}</span><div><h3>{item.name}</h3><p>{item.description}</p><div className="dish-ingredients">{(item.ingredients || []).slice(0,5).map(x=><small key={x}>{x}</small>)}</div><strong>{money(item.price)}</strong><button className="card-customize" onClick={() => setOpen(true)}>Customize & add <ArrowRight size={13}/></button></div></div>
+    {open && <ItemModal item={item} onClose={() => setOpen(false)} onAdd={(food, addon) => { onAdd(food, addon); setOpen(false); }} />}
+  </article>;
 }
 
 function MenuView({ menu, categories, selectedCategory, setSelectedCategory, onSelect, onAdd }) {
-  const filtered = selectedCategory === "popular" ? menu : menu.filter(x => x.category === selectedCategory);
-  return <main className="content menu-page"><div className="page-heading"><div><span className="eyebrow">FOURTH CROWN MENU</span><h1>Choose your plate.</h1></div><div className="search-box"><Search size={16}/><input placeholder="Search menu" onChange={() => {}}/></div></div><div className="category-tabs">{categories.map(c => <button key={c.id} className={selectedCategory===c.id?"active":""} onClick={() => setSelectedCategory(c.id)}>{c.name}</button>)}</div><div className="menu-grid">{filtered.map(item => <article className="menu-card" key={item.id}><button className="food-placeholder" onClick={() => onSelect(item)}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/>{item.badge && <b>{item.badge}</b>}</button><div className="menu-card-body"><div><h3>{item.name}</h3><strong>{money(item.price)}</strong></div><p>{item.description}</p><div className="card-actions"><span className={item.available?"available":"sold"}>{item.available?"Available":"Sold out"}</span><button className="small-add" disabled={!item.available} onClick={() => onAdd(item)}><Plus size={14}/> Add</button></div></div></article>)}</div></main>;
+  const [search, setSearch] = useState("");
+  const filtered = (selectedCategory === "popular" ? menu : menu.filter(x => x.category === selectedCategory)).filter(x => `${x.name} ${x.description}`.toLowerCase().includes(search.toLowerCase()));
+  return <main className="content menu-page"><div className="page-heading"><div><span className="eyebrow">FOURTH CROWN MENU</span><h1>Choose your plate.</h1><p className="menu-helper"><CircleHelp size={14}/> Tap <b>Customize & add</b> if you want extras. Use <b>Quick add</b> for the regular plate.</p></div><div className="search-box"><Search size={16}/><input placeholder="Search jollof, fufu, ampesi..." value={search} onChange={e=>setSearch(e.target.value)}/></div></div><div className="category-tabs">{categories.map(c => <button key={c.id} className={selectedCategory===c.id?"active":""} onClick={() => setSelectedCategory(c.id)}>{c.name}</button>)}</div><div className="menu-grid">{filtered.map(item => <article className="menu-card" key={item.id}><button className="food-placeholder" onClick={() => onSelect(item)}><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/>{item.badge && <b>{item.badge}</b>}</button><div className="menu-card-body"><div><h3>{item.name}</h3><strong>{money(item.price)}</strong></div><p>{item.description}</p><div className="card-actions"><span className={item.available?"available":"sold"}>{item.available?"Available":"Sold out"}</span><div className="menu-card-buttons"><button className="small-add secondary" disabled={!item.available} onClick={() => onSelect(item)}>Customize</button><button className="small-add" disabled={!item.available} onClick={() => onAdd(item)}><Plus size={14}/> Quick add</button></div></div></div></article>)}</div></main>;
 }
 
 function ItemModal({ item, onClose, onAdd }) {
-  const [addon, setAddon] = useState(null);
-  const addons = [{id:"plantain",name:"Extra fried plantain",price:3},{id:"chicken",name:"Extra grilled chicken",price:5},{id:"shito",name:"Kpakpo shito",price:1.5}];
-  return <div className="modal-backdrop" onMouseDown={e => e.target===e.currentTarget && onClose()}><div className="modal"><button className="modal-close" onClick={onClose}><X/></button><div className="modal-food"><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/></div><span className="eyebrow">{item.badge || "FOURTH CROWN"}</span><h2>{item.name}</h2><p>{item.description}</p><div className="addon-list"><label>Optional extras</label>{addons.map(a => <button className={`addon ${addon?.id===a.id?"selected":""}`} key={a.id} onClick={() => setAddon(addon?.id===a.id?null:a)}><span>{a.name}</span><b>+{money(a.price)}</b></button>)}</div><button className="btn btn-dark full" onClick={() => onAdd(item, addon)}>Add to cart · {money(item.price+(addon?.price||0))}</button></div></div>;
+  const [addons, setAddons] = useState([]);
+  const options = item.addons || defaultAddons;
+  const toggle = a => setAddons(current => current.some(x=>x.id===a.id) ? current.filter(x=>x.id!==a.id) : [...current,a]);
+  const extraTotal = addons.reduce((s,a)=>s+a.price,0);
+  return <div className="modal-backdrop" onMouseDown={e => e.target===e.currentTarget && onClose()}><div className="modal food-detail-modal"><button className="modal-close" onClick={onClose}><X/></button><div className="modal-food"><img src={item.image} alt={item.name} onError={(e)=>{e.currentTarget.style.display="none"; e.currentTarget.parentElement.classList.add("image-failed")}}/></div><span className="eyebrow">{item.badge || "FOURTH CROWN"}</span><h2>{item.name}</h2><p>{item.description}</p><div className="easy-order-note"><Settings2 size={15}/><span><b>Make it yours.</b> Extras are optional. Tap anything you want, then add your plate.</span></div><div className="addon-list"><label>Choose optional extras</label>{options.map(a => <button type="button" className={`addon ${addons.some(x=>x.id===a.id)?"selected":""}`} key={a.id} onClick={() => toggle(a)}><span><i>{addons.some(x=>x.id===a.id)?"✓":"+"}</i>{a.name}</span><b>{a.price ? `+${money(a.price)}` : "Included"}</b></button>)}</div><button className="btn btn-dark full" onClick={() => onAdd(item, addons.length ? {id:addons.map(a=>a.id).join("+"),name:addons.map(a=>a.name).join(", "),price:extraTotal}:null)}>Add to cart · {money(item.price+extraTotal)}</button></div></div>;
 }
 
 function AddToast({ name, onClose, onViewCart }) {
@@ -335,20 +402,63 @@ function CartView({ cart, total, onQty, onCheckout, onBrowse }) {
 
 function CheckoutView({ settings, cart, total, onSubmit, onBack }) {
   const [fulfillment, setFulfillment] = useState("pickup");
+  const [paymentMethod, setPaymentMethod] = useState("card");
   const [form, setForm] = useState({ name:"", phone:"", email:"", address:"" });
+  const [paying, setPaying] = useState(false);
+  const [paymentError, setPaymentError] = useState("");
   const fee=fulfillment==="delivery"?Number(settings.deliveryFee):0, tax=total*Number(settings.taxRate)/100, grand=total+fee+tax;
-  const submit=e=>{e.preventDefault();if(!form.name||!form.phone)return alert("Please enter your name and phone number.");onSubmit({...form,fulfillment});};
+  const submit=async e=>{
+    e.preventDefault();
+    setPaymentError("");
+    if(!form.name||!form.phone)return setPaymentError("Please enter your name and phone number.");
+    if(fulfillment==="delivery"&&!form.address)return setPaymentError("Please enter your delivery address.");
+    if(paymentMethod==="pay-later") return onSubmit({...form,fulfillment,paymentMethod,status:"Payment pending"});
+    try {
+      setPaying(true);
+      const response = await fetch("/api/create-checkout-session", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ customer:form, fulfillment, items:cart, totals:{subtotal:total,deliveryFee:fee,tax,total:grand} }) });
+      const data = await response.json();
+      if(!response.ok || !data.url) throw new Error(data.error || "Online payment is not configured yet.");
+      sessionStorage.setItem("fcc_pending_order", JSON.stringify({ customer:{...form,fulfillment},items:cart,subtotal:total,deliveryFee:fee,tax,total:grand,createdAt:new Date().toISOString() }));
+      window.location.href = data.url;
+    } catch(err) { setPaymentError(err.message || "Payment could not be started. Please try again."); setPaying(false); }
+  };
   if(!cart.length)return <Empty title="There is nothing to checkout." action={onBack}/>;
-  return <main className="content narrow"><div className="page-heading"><div><span className="eyebrow">CHECKOUT</span><h1>Complete your order.</h1></div></div><form className="checkout" onSubmit={submit}><div className="fulfillment"><button type="button" className={fulfillment==="pickup"?"selected":""} onClick={()=>setFulfillment("pickup")}><ShoppingBag/> Pickup</button><button type="button" className={fulfillment==="delivery"?"selected":""} onClick={()=>setFulfillment("delivery")}><Truck/> Delivery</button></div><label>Full name<input required value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></label><label>Phone<input required value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/></label><label>Email<input type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></label>{fulfillment==="delivery"&&<label>Delivery address<textarea required value={form.address} onChange={e=>setForm({...form,address:e.target.value})}/></label>}<div className="summary"><span>Subtotal</span><b>{money(total)}</b><span>Delivery</span><b>{fee?money(fee):"Free"}</b><span>Tax</span><b>{money(tax)}</b><strong>Total</strong><strong>{money(grand)}</strong></div><button className="btn btn-dark full" disabled={!settings.acceptingOrders}>Place order · {money(grand)}</button>{!settings.acceptingOrders&&<p className="warning">Online ordering is currently paused by the restaurant.</p>}</form></main>;
+  return <main className="content narrow"><div className="page-heading"><div><span className="eyebrow">CHECKOUT</span><h1>Almost there.</h1><p className="checkout-intro">Choose pickup or delivery, enter your details, then pay securely.</p></div></div><form className="checkout" onSubmit={submit}><div className="checkout-step"><span>01</span><div><b>How do you want your order?</b><small>Pick up yourself or have it delivered.</small></div></div><div className="fulfillment"><button type="button" className={fulfillment==="pickup"?"selected":""} onClick={()=>setFulfillment("pickup")}><ShoppingBag/> <span>Pickup</span><small>Collect your order</small></button><button type="button" className={fulfillment==="delivery"?"selected":""} onClick={()=>setFulfillment("delivery")}><Truck/> <span>Delivery</span><small>Bring it to me</small></button></div><div className="checkout-step"><span>02</span><div><b>Your details</b><small>We only need what is necessary to complete your order.</small></div></div><label>Full name<input required value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="e.g. Emmanuel Boateng"/></label><label>Phone<input required value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="e.g. 404 555 0198"/></label><label>Email <small>(optional)</small><input type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="you@example.com"/></label>{fulfillment==="delivery"&&<label>Delivery address<textarea required value={form.address} onChange={e=>setForm({...form,address:e.target.value})} placeholder="Street, city, ZIP code"/></label>}<div className="checkout-step"><span>03</span><div><b>Payment</b><small>Choose how you want to pay.</small></div></div><div className="payment-methods"><button type="button" className={paymentMethod==="card"?"selected":""} onClick={()=>setPaymentMethod("card")}><CreditCard size={18}/><span><b>Pay securely online</b><small>Card, Apple Pay or Google Pay where available</small></span><ShieldCheck size={16}/></button><button type="button" className={paymentMethod==="pay-later"?"selected":""} onClick={()=>setPaymentMethod("pay-later")}><WalletCards size={18}/><span><b>Pay at pickup</b><small>Use only if the restaurant enables it</small></span></button></div><div className="summary"><span>Subtotal</span><b>{money(total)}</b><span>Delivery</span><b>{fee?money(fee):"Free"}</b><span>Tax</span><b>{money(tax)}</b><strong>Total</strong><strong>{money(grand)}</strong></div>{paymentError&&<div className="payment-error"><CircleHelp size={16}/>{paymentError}</div>}<button className="btn btn-dark full payment-submit" disabled={!settings.acceptingOrders||paying}>{paying?"Opening secure payment…":paymentMethod==="card"?`Continue to secure payment · ${money(grand)}`:`Place order · ${money(grand)}`}</button>{!settings.acceptingOrders&&<p className="warning">Online ordering is currently paused by the restaurant.</p>}<p className="secure-note"><ShieldCheck size={14}/> Your payment details are handled by the payment provider; FOURTH CROWN does not store card numbers in this app.</p></form></main>;
+}
+
+function PaymentSuccessView({ onPaid }) {
+  const [state,setState]=useState("checking");
+  const [message,setMessage]=useState("Confirming your payment securely…");
+  useEffect(()=>{
+    const run=async()=>{
+      const pending=JSON.parse(sessionStorage.getItem("fcc_pending_order")||"null");
+      const sessionId=new URLSearchParams(window.location.search).get("session_id");
+      if(!pending || !sessionId){setState("error");setMessage("We could not find the order session. Please contact FOURTH CROWN before paying again.");return;}
+      try{
+        const r=await fetch(`/api/verify-checkout-session?session_id=${encodeURIComponent(sessionId)}`);
+        const data=await r.json();
+        if(!r.ok || !data.paid) throw new Error(data.error||"Payment has not been confirmed.");
+        setState("success");setMessage("Payment received. Your order has been sent to FOURTH CROWN.");
+        window.setTimeout(()=>onPaid(pending,data),900);
+      }catch(err){setState("error");setMessage(err.message||"Payment could not be verified.");}
+    }; run();
+  },[]);
+  return <main className="payment-result"><div className={`payment-result-card ${state}`}><div className="payment-result-icon">{state==="success"?<CheckCircle2 size={34}/>:state==="error"?<CircleHelp size={34}/>:<CreditCard size={34}/>}</div><span className="eyebrow">FOURTH CROWN PAYMENT</span><h1>{state==="success"?"Thank you.":state==="error"?"Payment check needed":"Checking payment…"}</h1><p>{message}</p>{state==="error"&&<a href="tel:8504656422">Call 850 465 6422</a>}</div></main>;
 }
 
 function OrdersView({ orders }) { return <main className="content narrow"><div className="page-heading"><div><span className="eyebrow">ORDER HISTORY</span><h1>Your orders.</h1></div></div>{!orders.length?<Empty title="No orders yet." action={()=>{}}/>:<div className="orders-list">{orders.map(o=><article className="order-card" key={o.id}><div><b>{o.id}</b><small>{new Date(o.createdAt).toLocaleString()}</small></div><span className={`status ${o.status.toLowerCase().replaceAll(" ","-")}`}>{o.status}</span><strong>{money(o.total)}</strong><small>{o.items.reduce((s,i)=>s+i.quantity,0)} item(s) · {o.customer.fulfillment}</small></article>)}</div>}</main>; }
 
 function AdminView({ authed,setAuthed,menu,setMenu,categories,setCategories,settings,setSettings,orders,updateOrderStatus,logout }) {
-  const [tab,setTab]=useState("dashboard"),[credentials,setCredentials]=useState({email:"",password:""}),[newItem,setNewItem]=useState({name:"",price:"",category:"rice",description:""});
-  if(!authed)return <main className="admin-login"><div className="admin-login-card"><span className="brand-mark large"><Crown/></span><span className="eyebrow">FOURTH CROWN ADMIN</span><h1>Operations portal</h1><p>Demo access for local testing. Replace with secure server authentication before launch.</p><input placeholder="Email" value={credentials.email} onChange={e=>setCredentials({...credentials,email:e.target.value})}/><input type="password" placeholder="Password" value={credentials.password} onChange={e=>setCredentials({...credentials,password:e.target.value})}/><button className="btn btn-dark full" onClick={()=>{if(credentials.email==="admin@fourthcrown.com"&&credentials.password==="FourthCrownDemo!"){sessionStorage.setItem("fcc_admin","1");setAuthed(true)}else alert("Demo credentials are incorrect.")}}>Sign in</button></div></main>;
+  const [tab,setTab]=useState("dashboard"),[credentials,setCredentials]=useState({email:"",password:""}),[editing,setEditing]=useState(null),[newItem,setNewItem]=useState({name:"",price:"",category:"rice",description:""});
+  if(!authed)return <main className="admin-login"><div className="admin-login-card"><img className="admin-login-logo" src="/images/fourth-crown-logo-transparent.png" alt="FOURTH CROWN"/><span className="eyebrow">FOURTH CROWN ADMIN</span><h1>Restaurant control centre</h1><p>Simple controls for everyday restaurant work. You do not need to know how to code.</p><label>Email<input placeholder="Email" value={credentials.email} onChange={e=>setCredentials({...credentials,email:e.target.value})}/></label><label>Password<input type="password" placeholder="Password" value={credentials.password} onChange={e=>setCredentials({...credentials,password:e.target.value})}/></label><button className="btn btn-dark full" onClick={()=>{if(credentials.email==="admin@fourthcrown.com"&&credentials.password==="FourthCrownDemo!"){sessionStorage.setItem("fcc_admin","1");setAuthed(true)}else alert("Demo credentials are incorrect.")}}>Sign in</button><small className="admin-demo-note">Demo login: admin@fourthcrown.com · FourthCrownDemo!</small></div></main>;
   const revenue=orders.reduce((s,o)=>s+o.total,0);
-  return <main className="admin-shell"><aside className="admin-sidebar"><div className="admin-brand"><span className="brand-mark"><Crown size={17}/></span><b>FOURTH CROWN</b></div>{["dashboard","orders","menu","settings"].map(x=><button className={tab===x?"active":""} onClick={()=>setTab(x)} key={x}>{x}</button>)}<button onClick={logout}>Sign out</button></aside><section className="admin-main"><div className="admin-top"><div><span className="eyebrow">ADMINISTRATION</span><h1>{tab==="dashboard"?"Overview":tab[0].toUpperCase()+tab.slice(1)}</h1></div><span className="live-dot">● {settings.acceptingOrders?"Accepting orders":"Paused"}</span></div>{tab==="dashboard"&&<div className="dashboard"><div className="stats"><Stat label="Orders" value={orders.length}/><Stat label="Revenue" value={money(revenue)}/><Stat label="Menu items" value={menu.length}/><Stat label="Available" value={menu.filter(x=>x.available).length}/></div><section className="panel"><h2>Recent orders</h2>{orders.slice(0,5).map(o=><div className="admin-order" key={o.id}><b>{o.id}</b><span>{o.customer.name}</span><span>{money(o.total)}</span><select value={o.status} onChange={e=>updateOrderStatus(o.id,e.target.value)}>{["Received","Preparing","Ready","Out for delivery","Completed","Cancelled"].map(s=><option key={s}>{s}</option>)}</select></div>)}{!orders.length&&<p className="muted">No orders yet. Place a customer test order to populate this area.</p>}</section></div>}{tab==="orders"&&<section className="panel">{orders.map(o=><div className="admin-order expanded" key={o.id}><div><b>{o.id}</b><small>{o.customer.name} · {o.customer.phone}</small></div><span>{o.customer.fulfillment}</span><strong>{money(o.total)}</strong><select value={o.status} onChange={e=>updateOrderStatus(o.id,e.target.value)}>{["Received","Preparing","Ready","Out for delivery","Completed","Cancelled"].map(s=><option key={s}>{s}</option>)}</select></div>)}{!orders.length&&<p className="muted">No orders.</p>}</section>}{tab==="menu"&&<section className="panel"><div className="panel-head"><h2>Menu management</h2><span>Edit prices, availability and descriptions here.</span></div><div className="add-item"><input placeholder="Item name" value={newItem.name} onChange={e=>setNewItem({...newItem,name:e.target.value})}/><input type="number" placeholder="Price" value={newItem.price} onChange={e=>setNewItem({...newItem,price:e.target.value})}/><select value={newItem.category} onChange={e=>setNewItem({...newItem,category:e.target.value})}>{categories.filter(c=>c.id!=="popular").map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select><input placeholder="Description" value={newItem.description} onChange={e=>setNewItem({...newItem,description:e.target.value})}/><button className="small-add" onClick={()=>{if(!newItem.name||!newItem.price)return;setMenu([...menu,{id:crypto.randomUUID(),...newItem,price:Number(newItem.price),available:true,badge:"",image:initialMenu[0].image}]);setNewItem({name:"",price:"",category:"rice",description:""})}}><Plus/> Add</button></div>{menu.map((item,i)=><div className="menu-admin-row" key={item.id}><input value={item.name} onChange={e=>setMenu(menu.map((x,j)=>j===i?{...x,name:e.target.value}:x))}/><input type="number" value={item.price} onChange={e=>setMenu(menu.map((x,j)=>j===i?{...x,price:Number(e.target.value)}:x))}/><label className="switch"><input type="checkbox" checked={item.available} onChange={e=>setMenu(menu.map((x,j)=>j===i?{...x,available:e.target.checked}:x))}/><span>{item.available?"Available":"Sold out"}</span></label></div>)}</section>}{tab==="settings"&&<section className="panel settings-form"><label>Restaurant name<input value={settings.restaurantName} onChange={e=>setSettings({...settings,restaurantName:e.target.value})}/></label><label>Tagline<input value={settings.tagline} onChange={e=>setSettings({...settings,tagline:e.target.value})}/></label><label>Pickup location<input value={settings.pickupAddress} onChange={e=>setSettings({...settings,pickupAddress:e.target.value})}/></label><label>Delivery fee<input type="number" value={settings.deliveryFee} onChange={e=>setSettings({...settings,deliveryFee:Number(e.target.value)})}/></label><label>Tax rate (%)<input type="number" value={settings.taxRate} onChange={e=>setSettings({...settings,taxRate:Number(e.target.value)})}/></label><label className="checkline"><input type="checkbox" checked={settings.acceptingOrders} onChange={e=>setSettings({...settings,acceptingOrders:e.target.checked})}/> Accept online orders</label><p className="muted">These settings persist locally in this prototype. Production settings must be stored server-side with audit controls.</p></section>}</section></main>;
+  const updateItem=(id,patch)=>setMenu(current=>current.map(item=>item.id===id?{...item,...patch}:item));
+  const addItem=()=>{if(!newItem.name||!newItem.price)return;setMenu([...menu,{id:crypto.randomUUID(),...newItem,price:Number(newItem.price),available:true,badge:"",image:foodImages.jollof,addons:defaultAddons}]);setNewItem({name:"",price:"",category:"rice",description:""});};
+  return <main className="admin-shell"><aside className="admin-sidebar"><div className="admin-brand"><img src="/images/fourth-crown-logo-transparent.png" alt="FOURTH CROWN"/></div>{[["dashboard","Overview"],["orders","Orders"],["menu","Menu & prices"],["settings","Restaurant settings"]].map(([id,label])=><button className={tab===id?"active":""} onClick={()=>setTab(id)} key={id}>{label}</button>)}<a href="/" className="admin-view-site">View customer site</a><button onClick={logout}>Sign out</button></aside><section className="admin-main"><div className="admin-top"><div><span className="eyebrow">RESTAURANT CONTROL CENTRE</span><h1>{tab==="dashboard"?"Today’s overview":tab==="menu"?"Menu & prices":tab==="orders"?"Orders":"Restaurant settings"}</h1></div><span className="live-dot">● {settings.acceptingOrders?"Accepting orders":"Ordering paused"}</span></div>
+    {tab==="dashboard"&&<div className="dashboard"><div className="stats"><Stat label="Orders" value={orders.length}/><Stat label="Revenue" value={money(revenue)}/><Stat label="Menu items" value={menu.length}/><Stat label="Available today" value={menu.filter(x=>x.available).length}/></div><section className="panel admin-help"><h2>What do you want to do?</h2><div className="admin-quick"><button onClick={()=>setTab("menu")}><Utensils/><b>Change a food</b><span>Price, name, photo or sold-out status</span></button><button onClick={()=>setTab("orders")}><ShoppingBag/><b>Check new orders</b><span>See what customers have ordered</span></button><button onClick={()=>setTab("settings")}><Settings2/><b>Change restaurant settings</b><span>Delivery fee, tax and ordering</span></button></div></section><section className="panel"><h2>Recent orders</h2>{orders.slice(0,6).map(o=><div className="admin-order" key={o.id}><b>{o.id}</b><span>{o.customer.name}</span><span>{money(o.total)}</span><select value={o.status} onChange={e=>updateOrderStatus(o.id,e.target.value)}>{["Received","Preparing","Ready","Out for delivery","Completed","Cancelled"].map(s=><option key={s}>{s}</option>)}</select></div>)}{!orders.length&&<p className="muted">No orders yet.</p>}</section></div>}
+    {tab==="orders"&&<section className="panel"><div className="panel-head"><div><h2>Customer orders</h2><span>Change the status as the kitchen works.</span></div></div>{orders.map(o=><div className="admin-order expanded" key={o.id}><div><b>{o.id}</b><small>{o.customer.name} · {o.customer.phone}</small></div><span>{o.customer.fulfillment}</span><strong>{money(o.total)}</strong><select value={o.status} onChange={e=>updateOrderStatus(o.id,e.target.value)}>{["Received","Preparing","Ready","Out for delivery","Completed","Cancelled"].map(s=><option key={s}>{s}</option>)}</select></div>)}{!orders.length&&<p className="muted">No orders.</p>}</section>}
+    {tab==="menu"&&<section className="panel menu-manager"><div className="panel-head"><div><h2>Easy menu editor</h2><span>Everything below changes what customers see. No coding required.</span></div></div><div className="admin-tip"><CircleHelp size={16}/><span><b>Quick rule:</b> Turn a food off when you run out. Change the price when you need to. Customers see the change immediately.</span></div><div className="add-item easy-add"><input placeholder="Food name" value={newItem.name} onChange={e=>setNewItem({...newItem,name:e.target.value})}/><input type="number" placeholder="Price ($)" value={newItem.price} onChange={e=>setNewItem({...newItem,price:e.target.value})}/><select value={newItem.category} onChange={e=>setNewItem({...newItem,category:e.target.value})}>{categories.filter(c=>c.id!=="popular").map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select><input placeholder="Short description" value={newItem.description} onChange={e=>setNewItem({...newItem,description:e.target.value})}/><button className="small-add" onClick={addItem}><Plus/> Add food</button></div><div className="admin-menu-list">{menu.map(item=><article className={`admin-menu-card ${item.available?"":"is-off"}`} key={item.id}><img src={item.image} alt=""/><div className="admin-menu-main">{editing===item.id?<><input value={item.name} onChange={e=>updateItem(item.id,{name:e.target.value})}/><textarea value={item.description} onChange={e=>updateItem(item.id,{description:e.target.value})}/><select value={item.category} onChange={e=>updateItem(item.id,{category:e.target.value})}>{categories.filter(c=>c.id!=="popular").map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></>:<><h3>{item.name}</h3><p>{item.description}</p><span>{categories.find(c=>c.id===item.category)?.name || "Menu"}</span></>}</div><div className="admin-menu-price"><label>Price<input type="number" value={item.price} onChange={e=>updateItem(item.id,{price:Number(e.target.value)})}/></label><label className="admin-switch"><input type="checkbox" checked={item.available} onChange={e=>updateItem(item.id,{available:e.target.checked})}/><span>{item.available?<><Eye size={14}/> On menu</>:<><EyeOff size={14}/> Sold out</>}</span></label><button className="icon-admin" onClick={()=>setEditing(editing===item.id?null:item.id)}>{editing===item.id?<Save size={16}/>:<Pencil size={16}/>}<span>{editing===item.id?"Done":"Edit"}</span></button></div></article>)}</div></section>}
+    {tab==="settings"&&<section className="panel settings-form"><div className="settings-intro"><Settings2/><div><h2>Restaurant settings</h2><p>Use plain settings here. These are the things you normally change during the week.</p></div></div><label>Restaurant name<input value={settings.restaurantName} onChange={e=>setSettings({...settings,restaurantName:e.target.value})}/></label><label>Tagline<input value={settings.tagline} onChange={e=>setSettings({...settings,tagline:e.target.value})}/></label><label>Pickup location<input value={settings.pickupAddress} onChange={e=>setSettings({...settings,pickupAddress:e.target.value})}/></label><label>Delivery fee ($)<input type="number" value={settings.deliveryFee} onChange={e=>setSettings({...settings,deliveryFee:Number(e.target.value)})}/></label><label>Tax rate (%)<input type="number" value={settings.taxRate} onChange={e=>setSettings({...settings,taxRate:Number(e.target.value)})}/></label><label className="checkline"><input type="checkbox" checked={settings.acceptingOrders} onChange={e=>setSettings({...settings,acceptingOrders:e.target.checked})}/> Accept online orders</label><div className="settings-callout"><CreditCard size={18}/><div><b>Online payments</b><p>Stripe Checkout is prepared in this build. Add your Stripe secret key in Vercel before taking live card payments.</p></div></div></section>}</section></main>;
 }
 
 function Stat({label,value}){return <div className="stat"><small>{label}</small><strong>{value}</strong></div>}

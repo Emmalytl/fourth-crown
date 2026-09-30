@@ -27,3 +27,11 @@ A production build was not verified in this environment because dependency insta
 
 ## Important
 This remains a frontend prototype. Authentication, database, payments, delivery integration, server-side validation, audit logging and production security still need to be connected before launch.
+
+## Build 12 additions
+- 22-menu Ghanaian catalogue, including fufu, ampesi, waakye, banku & tilapia, kenkey, red red, kokonte, tuo zaafi, fried yam and more.
+- Item customization is easier: customers can Quick Add or choose Customize & Add, with simple optional-extra controls.
+- Restaurant control centre at `/admin` with plain-language menu, pricing, availability, order and restaurant-setting controls.
+- Stripe Checkout session API at `/api/create-checkout-session.js` and payment verification at `/api/verify-checkout-session.js`.
+- Add `STRIPE_SECRET_KEY` in Vercel before enabling live/test online card payments. The server-side API comments identify the remaining production hardening step: prices should be read from the database rather than trusted from the browser.
+- Payment-success flow verifies the Stripe Checkout session before creating the local paid-order record.

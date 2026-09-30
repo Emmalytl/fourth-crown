@@ -1,7 +1,7 @@
 {
-  "name": "fourth-crown",
-  "short_name": "fourth-crown",
-  "description": "FOURTH CROWN — The Taste of Ghana, Delivered.",
+  "name": "FOURTH CROWN",
+  "short_name": "FOURTH CROWN",
+  "description": "FOURTH CROWN \u2014 The Taste of Ghana, Delivered.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -9,7 +9,17 @@
   "theme_color": "#fffdf8",
   "orientation": "portrait-primary",
   "icons": [
-    {"src":"/images/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"/images/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

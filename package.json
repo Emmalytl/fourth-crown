@@ -14,7 +14,8 @@
     "typescript": "^5.9.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "lucide-react": "^0.544.0"
+    "lucide-react": "^0.544.0",
+    "stripe": "^18.5.0"
   },
   "devDependencies": {}
 }
