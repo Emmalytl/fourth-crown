@@ -28,7 +28,7 @@ A production build was not verified in this environment because dependency insta
 ## Important
 This remains a frontend prototype. Authentication, database, payments, delivery integration, server-side validation, audit logging and production security still need to be connected before launch.
 
-## Build 12 additions
+## Build 13 additions
 - 22-menu Ghanaian catalogue, including fufu, ampesi, waakye, banku & tilapia, kenkey, red red, kokonte, tuo zaafi, fried yam and more.
 - Item customization is easier: customers can Quick Add or choose Customize & Add, with simple optional-extra controls.
 - Restaurant control centre at `/admin` with plain-language menu, pricing, availability, order and restaurant-setting controls.

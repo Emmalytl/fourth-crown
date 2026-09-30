@@ -70,7 +70,10 @@ const initialMenu = [
 ];
 
 function loadMenu() {
-  const stored = load("fcc_menu", initialMenu);
+  const storedValue = load("fcc_menu", initialMenu);
+  // A previous build can leave invalid or non-array localStorage data behind.
+  // Always recover to the built-in menu instead of allowing the whole React app to crash.
+  const stored = Array.isArray(storedValue) ? storedValue : initialMenu;
   // Migrate built-in items and append any newly introduced built-ins to an older local cache.
   const canonical = Object.fromEntries(initialMenu.map(item => [item.id, item]));
   const migrated = stored.map(item => {
@@ -111,9 +114,9 @@ function load(key, fallback) {
 function App() {
   const [view, setView] = useState("home");
   const [menu, setMenu] = useState(loadMenu);
-  const [categories, setCategories] = useState(() => load("fcc_categories", initialCategories));
+  const [categories, setCategories] = useState(() => { const value = load("fcc_categories", initialCategories); return Array.isArray(value) && value.length ? value : initialCategories; });
   const [settings, setSettings] = useState(() => load("fcc_settings", initialSettings));
-  const [orders, setOrders] = useState(() => load("fcc_orders", demoOrders));
+  const [orders, setOrders] = useState(() => { const value = load("fcc_orders", demoOrders); return Array.isArray(value) ? value : demoOrders; });
   const [cart, setCart] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -469,6 +472,6 @@ createRoot(document.getElementById("root")).render(<App/>);
 // Enable install-to-home-screen support on HTTPS deployments.
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(() => {});
+    navigator.serviceWorker.register(`/sw.js?v=12`).catch(() => {});
   });
 }
