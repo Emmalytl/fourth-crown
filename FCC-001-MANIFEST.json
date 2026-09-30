@@ -1,0 +1,42 @@
+{
+  "project": "FOURTH CROWN",
+  "project_id": "FCC-001",
+  "build": "08",
+  "status": "frontend prototype \u2014 customer-facing visual revision",
+  "reference": "https://dribbble.com/shots/25754327-Restaurant-Website-Design-UI",
+  "logo": "public/images/fourth-crown-logo.png",
+  "logo_background_removed": false,
+  "features": [
+    "responsive editorial restaurant homepage",
+    "FOURTH CROWN logo with built-in warm background and steam wordmark",
+    "bright cream charcoal terracotta sage and muted copper palette",
+    "floating back-to-top control",
+    "mobile bottom navigation for Home Menu and Cart",
+    "local service carousel artwork for catering pickup and delivery",
+    "event catering callout and contact number",
+    "real food photography references matched to menu names",
+    "add-to-cart auto-dismiss toast for desktop and mobile",
+    "cart shortcut",
+    "menu browsing and categories",
+    "item details and add-ons",
+    "cart and quantity controls",
+    "pickup/delivery checkout prototype",
+    "order history"
+  ],
+  "production_gaps": [
+    "secure backend authentication",
+    "database",
+    "real payment provider",
+    "delivery provider/integration",
+    "server-side validation",
+    "audit logging",
+    "licensed restaurant-owned food photography"
+  ],
+  "notes": [
+    "Customer-facing Admin entry removed from the landing page; administration remains outside the customer navigation.",
+    "Added 850 465 6422 contact number and catering-for-all-events messaging.",
+    "Removed Fresh herbs from the ingredient list.",
+    "Replaced yellow-heavy treatment with a clearer brand palette.",
+    "Added local service artwork so the caterer/pickup/delivery carousel cannot appear blank because of remote image-host failures."
+  ]
+}
