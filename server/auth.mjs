@@ -1,0 +1,8 @@
+import {randomBytes,scryptSync,timingSafeEqual,createHash} from 'node:crypto';
+export const digest=value=>createHash('sha256').update(value).digest('hex');
+export function hashPassword(password){const salt=randomBytes(16).toString('hex');return `${salt}:${scryptSync(password,salt,64).toString('hex')}`;}
+export function verifyPassword(password,stored){const [salt,hash]=stored.split(':');const actual=scryptSync(password,salt,64);const expected=Buffer.from(hash,'hex');return actual.length===expected.length&&timingSafeEqual(actual,expected);}
+export function sessionToken(req){return /(?:^|;\s*)fcc_session=([a-f0-9]{64})(?:;|$)/.exec(req.headers.cookie||'')?.[1];}
+export function cookie(token,maxAge){return `fcc_session=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAge}${process.env.NODE_ENV==='production'?'; Secure':''}`;}
+export async function identity(client,req){const token=sessionToken(req);if(!token)return null;return (await client.query('select u.id,u.role from admin_sessions s join admin_users u on u.id=s.user_id where s.token_hash=$1 and s.expires_at>now()',[digest(token)])).rows[0]||null;}
+export async function limit(client,key,max=20){const result=await client.query(`insert into request_limits(key) values($1) on conflict(key) do update set attempts=case when request_limits.window_start<now()-interval '15 minutes' then 1 else request_limits.attempts+1 end,window_start=case when request_limits.window_start<now()-interval '15 minutes' then now() else request_limits.window_start end returning attempts`,[digest(key)]);if(result.rows[0].attempts>max){const e=new Error('Too many requests. Please try later.');e.status=429;throw e;}}

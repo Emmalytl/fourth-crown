@@ -250,3 +250,9 @@
 .photo-credits summary{cursor:pointer;color:#b1a99e;font-weight:800;text-transform:uppercase;letter-spacing:1px}
 .photo-credits p{max-width:700px;margin:8px 0 0}
 @media(max-width:700px){.card-actions{align-items:stretch;flex-direction:column}.menu-card-buttons{width:100%;margin-left:0}.menu-card-buttons .small-add{flex:1;justify-content:center}.dish-purchase{align-items:stretch;flex-direction:column}.dish-purchase .card-customize{width:100%;justify-content:center}}
+
+/* Shared-system status and explicit administrator save controls. */
+.system-notice:empty{display:none}.system-notice{padding:12px 20px;background:#fff3d5;color:#5a421c;text-align:center;font-size:13px}
+button:disabled{cursor:not-allowed;opacity:.5}.admin-main>.btn{margin-bottom:20px}.admin-menu-price label{max-width:180px}
+
+.install-app{position:fixed;right:16px;bottom:90px;z-index:80}.install-app>button{background:#342417;color:#fff;border:1px solid #d5b06b;border-radius:24px;padding:12px 20px;box-shadow:0 4px 20px #0002;font-weight:700}.install-help{position:absolute;bottom:55px;right:0;background:#fffdf8;color:#342417;padding:24px;border:1px solid #d5b06b;border-radius:16px;width:min(340px,85vw);box-shadow:0 12px 40px #0003}.install-help>button{float:right;background:none;border:0;font-size:26px}.install-help p{line-height:1.6;font-size:14px}

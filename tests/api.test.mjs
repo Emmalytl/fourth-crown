@@ -1,0 +1,17 @@
+import {test,before,after} from 'node:test';
+import assert from 'node:assert/strict';
+import {PGlite} from '@electric-sql/pglite';
+import {pgcrypto} from '@electric-sql/pglite/contrib/pgcrypto';
+import {readFileSync} from 'node:fs';
+import {setTestDatabase} from '../server/db.mjs';
+import {hashPassword} from '../server/auth.mjs';
+import {handler} from '../server/app.mjs';
+let db,session;
+process.env.NODE_ENV='test';process.env.APP_URL='http://localhost:3000';
+before(async()=>{db=new PGlite({extensions:{pgcrypto}});await db.exec(readFileSync(new URL('../database/schema.sql',import.meta.url),'utf8'));await db.exec(readFileSync(new URL('../database/seed.sql',import.meta.url),'utf8'));await db.query('insert into admin_users(email,password_hash) values($1,$2)',['admin@example.test',hashPassword('valid-password-123')]);setTestDatabase({connect:async()=>({query:(...args)=>db.query(...args),release(){}})});});
+after(()=>db.close());
+async function api(action,body,cookie){const req={method:body?'POST':'GET',url:`/api/app?action=${action}`,body,headers:{host:'localhost:3000',origin:'http://localhost:3000','content-type':'application/json',cookie:cookie||'','x-forwarded-for':'test'}};let text;const headers={};const res={setHeader:(k,v)=>headers[k]=v,end:x=>text=x};await handler(req,res);return {status:res.statusCode,data:JSON.parse(text),headers};}
+test('API denies anonymous administrator data and menu writes',async()=>{assert.equal((await api('admin-orders')).status,401);assert.equal((await api('save-catalog',{menu:[],categories:[],settings:{}})).status,401);});
+test('API rejects incorrect password; admin login uses server cookie',async()=>{assert.equal((await api('login',{email:'admin@example.test',password:'wrong'})).status,401);const login=await api('login',{email:'admin@example.test',password:'valid-password-123'});assert.equal(login.status,200);assert.match(login.headers['Set-Cookie'],/HttpOnly/);session=login.headers['Set-Cookie'].split(';')[0];assert.equal((await api('session',undefined,session)).data.admin,true);});
+test('admin saves catalogue; public order is server-priced and visible to admin',async()=>{const catalog=(await api('catalog')).data;catalog.menu[0].price=12.5;catalog.menu[0].available=true;catalog.settings.acceptingOrders=true;catalog.settings.minimumOrder=0;catalog.settings.taxRate=10;const saved=await api('save-catalog',catalog,session);assert.equal(saved.status,200);const key=crypto.randomUUID();const body={key,customer:{name:'Test User',phone:'4045550100',fulfillment:'pickup',paymentMethod:'pay-later'},items:[{itemId:catalog.menu[0].id,quantity:2,price:0.01}]};const order=await api('place',body);assert.equal(order.status,200);assert.equal(Number(order.data.total),27.5);assert.equal((await api('place',body)).data.id,order.data.id);assert.equal((await api('track',{id:order.data.id,token:'wrong'})).status,400);assert.equal((await api('admin-orders',undefined,session)).data[0].id,order.data.id);assert.equal((await api('status',{id:order.data.id,status:'Preparing'},session)).data.status,'Preparing');assert.equal((await api('confirm-manual',{id:order.data.id,paymentStatus:'Paid',reference:'cash receipt TEST-001'},session)).status,200);assert.equal((await api('track',{id:order.data.id,token:order.data.trackingToken})).data.paymentStatus,'Paid');});
+test('logout revokes the server session',async()=>{await api('logout',{},session);assert.equal((await api('session',undefined,session)).data.admin,false);assert.equal((await api('admin-orders',undefined,session)).status,401);});

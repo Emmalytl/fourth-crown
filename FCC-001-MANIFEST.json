@@ -1,34 +1,24 @@
 {
-  "project": "FCC-001",
   "project_id": "FCC-001",
-  "build": "Build 12",
-  "status": "frontend prototype \u2014 logo/PWA/menu visual revision",
-  "reference": "https://dribbble.com/shots/25754327-Restaurant-Website-Design-UI",
-  "logo": "public/images/fourth-crown-logo-transparent.png",
-  "logo_background_removed": true,
-  "features": [
-    "22 Ghanaian menu items",
-    "easy menu customization",
-    "non-technical admin control centre",
-    "Stripe Checkout session scaffold",
-    "payment session verification",
-    "PWA install support"
+  "version": "0.3.0",
+  "database": "Neon PostgreSQL",
+  "hosting": "Vercel",
+  "status": "setup and test candidate",
+  "pwa": "install prompt plus iOS guidance",
+  "payments": [
+    "Stripe hosted checkout and signed webhook",
+    "PayPal approval and server capture",
+    "Zelle manual verification"
   ],
-  "production_gaps": [
-    "secure backend authentication",
-    "database",
-    "real payment provider",
-    "delivery provider/integration",
-    "server-side validation",
-    "audit logging",
-    "licensed restaurant-owned food photography"
+  "not_verified": [
+    "Hosted database",
+    "Live deployment",
+    "Provider transactions",
+    "Actual mobile PWA installation"
   ],
-  "notes": [
-    "Removed the landing-page logo card so the hero no longer shows a rectangular logo frame.",
-    "The uploaded FOURTH CROWN logo has its off-white background removed and is stored as a transparent PNG.",
-    "Navigation and footer use the same transparent logo asset.",
-    "Added fourth-crown title, favicon, web manifest, Apple touch icon and service worker for install-to-home-screen support.",
-    "Added the uploaded Acheke photo as a built-in menu item and featured homepage food image.",
-    "The first service slide now uses a brighter full-color Black/African-American server/customer photo from Pexels."
+  "pending": [
+    "Venmo-specific SDK experience",
+    "PayPal webhooks/reconciliation",
+    "Partial refunds and disputes"
   ]
 }
